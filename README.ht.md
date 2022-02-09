@@ -68,7 +68,7 @@ Prereki
 Video pou ede ou:
 
 - [Kijan pou mete Moncash sou sit ou pou w vann](https://youtu.be/lE3ejFT11_w)
-- [Comment Intégrer l'onglet Moncash Pay à votre commerce online - Technopro Web](https://youtu.be/NiWYrO_E5ik)
+- [Comment Intégrer l'onglet Moncash Pay à votre commerce online - Technopro Web](https://youtu.be/NiWYrO_E5ik) (🕊 Osirus)
 
 <p align="center">
 <a href="https://www.digicelgroup.com/ht/en/moncash/business.html" target="_blank">
@@ -83,7 +83,9 @@ Itilizasyon
 <h3>Egzanp</h3>
 
 ```php
-use Fruitsbytes\PHP\Moncash\Moncash;use Fruitsbytes\PHP\Moncash\MonCashException;use Fruitsbytes\PHP\Moncash\PaymentRequestResult;
+use Fruitsbytes\PHP\Moncash\Moncash;
+use Fruitsbytes\PHP\Moncash\MonCashException;
+use Fruitsbytes\PHP\Moncash\PaymentRequestResult;
 
 /**
 * @var string $client_id

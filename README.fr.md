@@ -68,7 +68,7 @@ Prérequis
 
 Video en ligne:
 - [Kijan pou mete Moncash sou sit ou pou w vann](https://youtu.be/lE3ejFT11_w)
-- [Comment Intégrer l'onglet Moncash Pay à votre commerce online - Technopro Web](https://youtu.be/NiWYrO_E5ik)
+- [Comment Intégrer l'onglet Moncash Pay à votre commerce online - Technopro Web](https://youtu.  (🕊 Osirus)be/NiWYrO_E5ik)
 
 <p align="center">
 <a href="https://www.digicelgroup.com/ht/en/moncash/business.html" target="_blank">
@@ -80,7 +80,9 @@ Utilisation
 -------
 
 ```php
-use Fruitsbytes\PHP\Moncash\Moncash;use Fruitsbytes\PHP\Moncash\MonCashException;use Fruitsbytes\PHP\Moncash\PaymentRequestResult;
+use Fruitsbytes\PHP\Moncash\Moncash;
+use Fruitsbytes\PHP\Moncash\MonCashException;
+use Fruitsbytes\PHP\Moncash\PaymentRequestResult;
 
 // Initialiser une instance pour les tests(sandbox)
 $monCash = new Moncash( $client_id, $client_secret);

@@ -1,0 +1,21 @@
+{
+  "name": "fruitsbytes/php-moncash",
+  "description": "PHP library to use Digicel MonCash",
+  "type": "library",
+  "license": "MIT",
+  "autoload": {
+    "psr-4": {
+      "Fruitsbytes\\PHP\\Moncash\\": "src/PHP/Moncash/"
+    }
+  },
+  "authors": [
+    {
+      "name": "Jeffrey N. Carre",
+      "email": "jeffrey.carre@gmail.com"
+    }
+  ],
+  "require": {
+    "php": ">=7.3 || ^8",
+    "guzzlehttp/guzzle": "^7.4.1"
+  }
+}

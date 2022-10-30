@@ -100,14 +100,14 @@ $client_secret='<votre-clé-secrète>';
 $monCash = new Moncash( $client_id, $client_secret, 'production');
 
 // Récupérer un nouveau token d'accès
-$token = $monCash->get_access_token();
+$token = $monCash->getAccessToken();
 
 // Récupérer le token de redirection pour l'interface client
 try{
     /**
     * @var $resultat PaymentRequestResult
     */
-    $resultat = $monCash->create_payment( 1000.50, <your-uniq-reference-id>);
+    $resultat = $monCash->CreatePayment( 1000.50, <your-uniq-reference-id>);
     $url_de_redirection = $result->redirect;
     $token = $result->token;
     

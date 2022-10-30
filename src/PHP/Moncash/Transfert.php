@@ -2,25 +2,26 @@
 
 namespace Fruitsbytes\PHP\Moncash;
 
-class Transfert {
-	/**
-	 * @var string
-	 */
-	public $transaction_id;
-	/**
-	 * @var float
-	 */
-	public $amount;
-	/**
-	 * @var string
-	 */
-	public $receiver;
-	/**
-	 * @var string
-	 */
-	public $message;
-	/**
-	 * @var string
-	 */
-	public $desc;
+class Transfert
+{
+    /**
+     * @var string
+     */
+    public $transaction_id;
+    /**
+     * @var float
+     */
+    public float $amount;
+    /**
+     * @var string
+     */
+    public string $receiver;
+    /**
+     * @var string
+     */
+    public string $message;
+    /**
+     * @var string
+     */
+    public string $desc;
 }

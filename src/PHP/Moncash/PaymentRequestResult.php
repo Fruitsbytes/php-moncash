@@ -2,19 +2,21 @@
 
 namespace Fruitsbytes\PHP\Moncash;
 
-class PaymentRequestResult {
+class PaymentRequestResult
+{
 
-	/**
-	 * @var string
-	 */
-	public $redirect;
-	/**
-	 * @var string
-	 */
-	public $token;
+    /**
+     * @var string
+     */
+    public string $redirect;
+    /**
+     * @var string
+     */
+    public string $token;
 
-	public function __construct( string $redirect, string $token ) {
-		$this->redirect = $redirect;
-		$this->token    = $token;
-	}
+    public function __construct(string $redirect, string $token)
+    {
+        $this->redirect = $redirect;
+        $this->token    = $token;
+    }
 }

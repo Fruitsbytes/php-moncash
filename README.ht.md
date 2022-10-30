@@ -103,14 +103,14 @@ $monCash = new Moncash( $client_id, $client_secret);
 $monCash = new Moncash( $client_id, $client_secret, 'production');
 
 // Jenere yon nouvo token
-$token = $monCash->get_access_token();
+$token = $monCash->getAccessToken();
 
 // Jenere yon nouvo lyen pou redirije kliyan an sou page Digicel la pou li ka kontinye operasyon an
 try{
     /**
     * @var $resultat PaymentRequestResult
     */
-    $resultat = $monCash->create_payment( 1000.50, <your-uniq-reference-id>);
+    $resultat = $monCash->CreatePayment( 1000.50, <your-uniq-reference-id>);
     $url_de_redirection = $result->redirect;
     $token = $result->token;
     

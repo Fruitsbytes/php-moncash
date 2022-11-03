@@ -2,7 +2,9 @@
 
 namespace Fruitsbytes\PHP\Moncash\Strategy\SecretManager;
 
-class SecretManagerException extends \Exception
+use Exception;
+
+class SecretManagerException extends Exception
 {
 
 }

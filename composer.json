@@ -1,11 +1,13 @@
 {
   "name": "fruitsbytes/php-moncash",
   "description": "PHP library to use Digicel MonCash",
+
   "type": "library",
   "license": "MIT",
   "autoload": {
     "psr-4": {
-      "Fruitsbytes\\PHP\\Moncash\\": "src/PHP/Moncash/"
+      "Fruitsbytes\\PHP\\Moncash\\": "src/PHP/Moncash/",
+      "Fruitsbytes\\Tests\\": "tests/"
     }
   },
   "authors": [
@@ -18,9 +20,14 @@
     "php": ">=8.0",
     "guzzlehttp/guzzle": "^7.5.0",
     "ext-json": "*",
-    "vlucas/phpdotenv": "^5.5"
+    "vlucas/phpdotenv": "^5.5",
+    "giggsey/libphonenumber-for-php": "^8.12"
   },
   "require-dev": {
-    "phpunit/phpunit": "^9.5.26"
+    "phpunit/phpunit": "^9.5.26",
+    "jetbrains/phpstorm-attributes": "^1.0"
+  },
+  "scripts": {
+    "phpunit": "vendor/bin/phpunit"
   }
 }

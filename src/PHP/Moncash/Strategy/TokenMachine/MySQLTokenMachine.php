@@ -2,7 +2,7 @@
 
 namespace Fruitsbytes\PHP\Moncash\Strategy\TokenMachine;
 
-class RedisTokenMachineInterface implements TokenMachineInterface
+class MySQLTokenMachine implements TokenMachineInterface
 {
     /** @inheritdoc  */
     function getToken(bool $new = false): string

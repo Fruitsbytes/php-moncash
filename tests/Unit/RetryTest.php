@@ -3,8 +3,8 @@
 namespace Fruitsbytes\Tests\Unit;
 
 use Exception;
-use Fruitsbytes\PHP\Moncash\MonCashException;
-use Fruitsbytes\PHP\Moncash\Retry;
+use Fruitsbytes\PHP\MonCash\APIException;
+use Fruitsbytes\PHP\MonCash\Retry;
 use PhpParser\Node\Expr\Closure;
 use PHPUnit\Framework\TestCase;
 use TypeError;
@@ -21,7 +21,7 @@ class RetryTest extends TestCase
      */
     public function itShouldNotAcceptAttemptsOutsideTheInterval(int $attempts)
     {
-        $this->expectException(MonCashException::class);
+        $this->expectException(APIException::class);
         if ($attempts > 10) {
             $this->expectExceptionMessage('Max number of attempts is 10');
         }
@@ -55,7 +55,7 @@ class RetryTest extends TestCase
     /**
      * @test
      * @dataProvider getBadClosures
-     * @throws MonCashException
+     * @throws APIException
      * @covers ::__construct
      */
     public function itShouldOnlyAcceptClosure($closure)
@@ -89,7 +89,7 @@ class RetryTest extends TestCase
             return $number++ > 5;
         }, 5);
 
-        $this->expectException(MonCashException::class);
+        $this->expectException(APIException::class);
         $this->expectExceptionMessage('Max number of attempts  exceeded for this call');
         $retry->call();
 

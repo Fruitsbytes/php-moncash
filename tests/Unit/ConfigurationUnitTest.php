@@ -3,7 +3,7 @@
 namespace Fruitsbytes\Tests\Unit;
 
 use Dotenv\Dotenv;
-use Fruitsbytes\PHP\Moncash\Configuration;
+use Fruitsbytes\PHP\MonCash\Configuration;
 use PHPUnit\Framework\TestCase;
 
 class ConfigurationUnitTest extends TestCase

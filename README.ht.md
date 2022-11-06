@@ -83,9 +83,9 @@ Itilizasyon
 <h3>Egzanp</h3>
 
 ```php
-use Fruitsbytes\PHP\Moncash\Moncash;
-use Fruitsbytes\PHP\Moncash\MonCashException;
-use Fruitsbytes\PHP\Moncash\PaymentRequestResult;
+use Fruitsbytes\PHP\MonCash\API;
+use Fruitsbytes\PHP\MonCash\APIException;
+use Fruitsbytes\PHP\MonCash\PaymentResponse;
 
 /**
 * @var string $client_id
@@ -97,10 +97,10 @@ $client_id ='<idantifyan-ou>';
 $client_secret='<mo-secrè>';
 
 // Inisyalize on instana pour fè test(sandbox)
-$monCash = new Moncash( $client_id, $client_secret);
+$monCash = new API( $client_id, $client_secret);
 
 // Inisyalize yon enstans pou fè test
-$monCash = new Moncash( $client_id, $client_secret, 'production');
+$monCash = new API( $client_id, $client_secret, 'production');
 
 // Jenere yon nouvo token
 $token = $monCash->getAccessToken();
@@ -108,7 +108,7 @@ $token = $monCash->getAccessToken();
 // Jenere yon nouvo lyen pou redirije kliyan an sou page Digicel la pou li ka kontinye operasyon an
 try{
     /**
-    * @var $resultat PaymentRequestResult
+    * @var $resultat PaymentResponse
     */
     $resultat = $monCash->CreatePayment( 1000.50, <your-uniq-reference-id>);
     $url_de_redirection = $result->redirect;
@@ -116,7 +116,7 @@ try{
     
     response(["redirection_url"=>$redirection_url])->json();
     
-}catch (MonCashException $e){
+}catch (APIException $e){
  //...
 }
 ```
@@ -126,9 +126,9 @@ aleatwa ` <uniq-reference-id>`
 
 ```php
 // Telechaje enfòmasyon sou yon peman avèk nimewo referans biznis ou a bay tranzakyon an
-use Fruitsbytes\PHP\Moncash\PaymentRequestResult;
+use Fruitsbytes\PHP\MonCash\PaymentResponse;
 /**
-* @var $resultatPaiement PaymentRequestResult
+* @var $resultatPaiement PaymentResponse
  */
 $resultatPaiement = $monCash->get_payment_by_order( '5392b804-4c15-40b2-9049-f7a471df15fd');
 
@@ -136,7 +136,7 @@ $resultatPaiement = $monCash->get_payment_by_order( '5392b804-4c15-40b2-9049-f7a
 $resultatPaiement= $monCash->get_payment_by_transaction( '1559796839');
 
 // Fè yon transfè
-use Fruitsbytes\PHP\Moncash\TransfertRequestResult;
+use Fruitsbytes\PHP\MonCash\TransfertRequestResult;
 
 /**
 * @var $transactionResult TransfertRequestResult

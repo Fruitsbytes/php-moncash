@@ -6,8 +6,8 @@
   "license": "MIT",
   "autoload": {
     "psr-4": {
-      "Fruitsbytes\\PHP\\Moncash\\": "src/PHP/Moncash/",
-      "Fruitsbytes\\Tests\\": "tests/"
+      "Fruitsbytes\\PHP\\MonCash\\": "src/",
+      "Fruitsbytes\\PHP\\MonCash\\Tests\\": "tests/"
     }
   },
   "authors": [
@@ -21,7 +21,8 @@
     "guzzlehttp/guzzle": "^7.5.0",
     "ext-json": "*",
     "vlucas/phpdotenv": "^5.5",
-    "giggsey/libphonenumber-for-php": "^8.12"
+    "giggsey/libphonenumber-for-php": "^8.12",
+    "ramsey/uuid": "^4.5"
   },
   "require-dev": {
     "phpunit/phpunit": "^9.5.26",

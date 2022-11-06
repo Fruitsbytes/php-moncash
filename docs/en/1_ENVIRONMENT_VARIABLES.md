@@ -66,9 +66,9 @@ MONCASH_LANG="en"
 #### 4.1.3 Override global environment
 
 ```php
-use Fruitsbytes\PHP\Moncash\Moncash;
-use Fruitsbytes\PHP\Moncash\MonCashException;
-use Fruitsbytes\PHP\Moncash\PaymentRequestResult;
+use Fruitsbytes\PHP\MonCash\API;
+use Fruitsbytes\PHP\MonCash\APIException;
+use Fruitsbytes\PHP\MonCash\PaymentResponse;
 
 /**
 * @var string $client_id
@@ -80,10 +80,10 @@ $client_id ='<your-client-id>';
 $client_secret='<your-client-secret>';
 
 // Switch credentials
-$monCash = new Moncash([$client_id, $client_secret,]);
+$monCash = new API([$client_id, $client_secret,]);
 
 // Override instance set mode to production
-$monCash = new Moncash("mode" => 'production');
+$monCash = new API("mode" => 'production');
 
 // Authenticate
 $token = $monCash->getAccessToken();
@@ -92,7 +92,7 @@ $token = $monCash->getAccessToken();
 try{
     /**
     * Create Payment 
-    * @var $result PaymentRequestResult
+    * @var $result PaymentResponse
     */
     $result = $monCash->CreatePayment( 1000.50, <your-uniq-reference-id>);
     $redirection_url = $result->redirect;
@@ -100,7 +100,7 @@ try{
     
      response(["redirectionUrl"=>$redirection_url])->json();
     
-}catch (MonCashException $e){
+}catch (APIException $e){
  //...
 }
 ```
@@ -162,9 +162,9 @@ semi-random-idempotent ` <uniq-reference-id>`
 
 ```php
 // Get Payment by your internal reference ID
-use Fruitsbytes\PHP\Moncash\PaymentRequestResult;
+use Fruitsbytes\PHP\MonCash\PaymentResponse;
 /**
-* @var $paymentResult PaymentRequestResult
+* @var $paymentResult PaymentResponse
  */
 $paymentResult = $monCash->getPaymentByOrder( '5392b804-4c15-40b2-9049-f7a471df15fd');
 
@@ -172,7 +172,7 @@ $paymentResult = $monCash->getPaymentByOrder( '5392b804-4c15-40b2-9049-f7a471df1
 $paymentResult = $monCash->getPaymentByTransaction( '1559796839');
 
 //Make a transfer
-use Fruitsbytes\PHP\Moncash\TransfertRequestResult;
+use Fruitsbytes\PHP\MonCash\TransfertRequestResult;
 /**
 * @var $transactionResult TransfertRequestResult
 */

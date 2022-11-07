@@ -2,17 +2,24 @@
 
 namespace Fruitsbytes\PHP\MonCash;
 
-use ArrayAccess;
+use ArrayObject;
 use Dotenv\Dotenv;
 use Dotenv\Exception\InvalidPathException;
+use Fruitsbytes\PHP\MonCash\Strategy\OrderIdGenerator\OrderIdGeneratorException;
+use Fruitsbytes\PHP\MonCash\Strategy\OrderIdGenerator\SimpleOrderIdGenerator;
+use Fruitsbytes\PHP\MonCash\Strategy\PhoneValidation\DefaultHaitianPhoneValidation;
 use Fruitsbytes\PHP\MonCash\Strategy\PhoneValidation\LibPhoneValidation;
+use Fruitsbytes\PHP\MonCash\Strategy\PhoneValidation\PhoneValidationException;
 use Fruitsbytes\PHP\MonCash\Strategy\SecretManager\DefaultSecretManager;
 use Fruitsbytes\PHP\MonCash\Strategy\SecretManager\SecretManagerException;
 use Fruitsbytes\PHP\MonCash\Strategy\SecretManager\SecretManagerInterface as SecretManager;
-use Fruitsbytes\PHP\MonCash\Strategy\TokenMachine\FileTokenMachine;
 use Fruitsbytes\PHP\MonCash\Strategy\TokenMachine\TokenMachineInterface as TokenMachine;
 use Fruitsbytes\PHP\MonCash\Strategy\OrderIdGenerator\OrderIdGeneratorInterface as OrderIdGenerator;
 use Fruitsbytes\PHP\MonCash\Strategy\PhoneValidation\PhoneValidationInterface as PhoneValidation;
+use Fruitsbytes\PHP\MonCash\Strategy\StrategyException;
+use Fruitsbytes\PHP\MonCash\Strategy\StrategyInterface;
+use Fruitsbytes\PHP\MonCash\Strategy\TokenMachine\FileTokenMachine;
+use Fruitsbytes\PHP\MonCash\Strategy\TokenMachine\TokenMachineException;
 use JetBrains\PhpStorm\ArrayShape;
 use JetBrains\PhpStorm\ExpectedValues;
 use ReflectionException;
@@ -23,7 +30,7 @@ use Stringable;
 /**
  * Configuration helper fpr this library
  */
-class Configuration implements ArrayAccess, Stringable
+class Configuration  extends ArrayObject implements Stringable
 {
 
     /**
@@ -35,8 +42,8 @@ class Configuration implements ArrayAccess, Stringable
     ];
 
     const HOST_REST_API = [
-        "sandbox"    => "",
-        "production" => ""
+        "sandbox"    => "https://sandbox.moncashbutton.digicelgroup.com/Api",
+        "production" => "https://moncashbutton.digicelgroup.com/Api"
     ];
 
     const GATEWAY_BASE = [
@@ -47,6 +54,37 @@ class Configuration implements ArrayAccess, Stringable
     const GATEWAY_MERCHANT = [
         "sandbox"    => "https://sandbox.moncashbutton.digicelgroup.com/MerChantApi",
         "production" => "https://moncashbutton.digicelgroup.com/MerChantApi"
+    ];
+
+    const STRATEGY_PACKAGE = [
+        'SecretManager'    => [
+            "exceptionClass" => SecretManagerException::class,
+            "default"        => DefaultSecretManager::class,
+            "interface"      => "Fruitsbytes\\PHP\\MonCash\\Strategy\\OrderIdGenerator\\OrderIdGeneratorInterface",
+            "nameSpace"      => "Fruitsbytes\\PHP\\MonCash\\Strategy\\OrderIdGenerator",
+            "propertyName"   => 'secretManager'
+        ],
+        'TokenMachine'     => [
+            "exceptionClass" => TokenMachineException::class,
+            "default"        => FileTokenMachine::class,
+            "interface"      => "Fruitsbytes\\PHP\\MonCash\\Strategy\\TokenMachine\\TokenMachineInterface",
+            "nameSpace"      => "Fruitsbytes\\PHP\\MonCash\\Strategy\\TokenMachine",
+            "propertyName"   => 'tokenMachine'
+        ],
+        'OrderIdGenerator' => [
+            "exceptionClass" => OrderIdGeneratorException::class,
+            "default"        => SimpleOrderIdGenerator::class,
+            "interface"      => "Fruitsbytes\\PHP\\MonCash\\Strategy\\OrderIdGenerator\\OrderIdGeneratorInterface",
+            "nameSpace"      => "Fruitsbytes\\PHP\\MonCash\\Strategy\\OrderIdGenerator",
+            "propertyName"   => 'orderIdGenerator'
+        ],
+        'PhoneValidation'  => [
+            "exceptionClass" => PhoneValidationException::class,
+            "default"        => DefaultHaitianPhoneValidation::class,
+            "interface"      => "Fruitsbytes\\PHP\\MonCash\\Strategy\\PhoneValidation\\PhoneValidationInterface",
+            "nameSpace"      => "Fruitsbytes\\PHP\\MonCash\\Strategy\\PhoneValidation",
+            "propertyName"   => 'phoneValidation'
+        ],
     ];
 
     /**
@@ -112,17 +150,18 @@ class Configuration implements ArrayAccess, Stringable
     /**
      * @var string
      */
-    public string $endpoint;
-
-    /**
-     * @var string
-     */
     public string $restApi;
 
     /**
      * @var string
      */
     public string $gatewayBase;
+
+
+    /**
+     * @var string
+     */
+    public string $gatewayMerchant;
 
     /**
      * @var string
@@ -180,31 +219,6 @@ class Configuration implements ArrayAccess, Stringable
     private array $array = [];
 
     /**
-     * @var  array{
-     *     'mode': string, 'clientSecret' : string, 'clientId': string, 'lang': string,
-     *     'businessKey': string, 'rsaPath': string, 'timeout':float|int,
-     *     'secretManager' : SecretManager,
-     *     'tokenMachine': TokenMachine,
-     *     'phoneValidation': PhoneValidation,
-     *     'orderIdGenerator': OrderIdGenerator
-     * }
-     */
-    #[ArrayShape([
-        'mode'             => 'string',
-        'lang'             => 'string',
-        'clientSecret'     => 'string',
-        'clientId'         => 'string',
-        'businessKey'      => 'string',
-        'rsaPath'          => 'string',
-        'timeout'          => 'string',
-        'secretManager'    => SecretManager::class,
-        'tokenMachine'     => TokenMachine::class,
-        'phoneValidation'  => PhoneValidation::class,
-        'orderIdGenerator' => OrderIdGenerator::class,
-    ])]
-    private array $serverConfig = [];
-
-    /**
      * Configuration instance for the **Fruitsbytes\PHP\Moncash\Moncash**.
      *
      * Creates a new configuration instance. Any unspecified values will
@@ -219,7 +233,7 @@ class Configuration implements ArrayAccess, Stringable
      *     'orderIdGenerator': OrderIdGenerator
      * }  $config  an array of configuration values  you want to use to override teh defaul for this instance
      *
-     * @throws SecretManagerException
+     * @throws ConfigurationException
      *
      * @example `$configuration = new Configuration(['lang'=>'ht']);`
      *
@@ -241,6 +255,7 @@ class Configuration implements ArrayAccess, Stringable
         ])]
         array $config = []
     ) {
+        parent::__construct($config, self::ARRAY_AS_PROPS);
         $this->update($config);
     }
 
@@ -305,36 +320,121 @@ class Configuration implements ArrayAccess, Stringable
      * @param  string|SecretManager|null  $manager
      *
      * @return void
-     * @throws SecretManagerException
+     * @throws SecretManagerException|StrategyException
      */
-    public function setSecretManager(string|SecretManager|null $manager): void
+    public function setSecretManager(string|SecretManager|null $manager = null): void
     {
-        if (is_string($manager)) {
+        $this->setStrategy($manager, 'SecretManager');
+    }
 
-            $secretManagerNamespaced = '\\Fruitsbytes\\PHP\\Moncash\\Strategy\\SecretManager\\'.$manager;
 
-            if (
-                class_exists($manager) &&
-                is_subclass_of($manager, SecretManager::class, true)
+    /**
+     * @throws StrategyException|TokenMachineException
+     */
+    public function setToKenMachine(string|ToKenMachine|null $tokenMachine = null)
+    {
+        $this->setStrategy($tokenMachine, 'ToKenMachine');
+    }
+
+    /**
+     * @throws StrategyException|PhoneValidationException
+     */
+    public function setPhoneValidation(string|PhoneValidation|null $phoneValidation = null)
+    {
+        $this->setStrategy($phoneValidation, 'PhoneValidation');
+    }
+
+    /**
+     * @throws StrategyException|OrderIdGeneratorException
+     */
+    public function setOrderIdGenerator(string|OrderIdGenerator|null $orderIdGenerator = null)
+    {
+        $this->setStrategy($orderIdGenerator, 'OrderIdGenerator');
+    }
+
+    /**
+     * @param  mixed  $strategy
+     *
+     * @return string
+     * @throws StrategyException
+     */
+    public static function getStrategyType(mixed $strategy): string
+    {
+
+        if ((empty($strategy)) || is_subclass_of($strategy, StrategyInterface::class) === false) {
+            throw new StrategyException('The provided strategy does not implement StrategyInterface(1).');
+        } else {
+
+            $found = [];
+            foreach (
+                [
+                    'SecretManager', 'TokenMachine', 'OrderIdGenerator', 'PhoneValidation'
+                ] as $strg
             ) {
-                $secretManagerClass = $manager;
-            } elseif (
-                class_exists($secretManagerNamespaced) &&
-                is_subclass_of($secretManagerNamespaced, SecretManager::class, true)
-            ) {
-                $secretManagerClass = $secretManagerNamespaced;
-            } else {
-                throw new SecretManagerException('INVALID_SECRET_MANAGER');
+                $namespacedInterface = "Fruitsbytes\\PHP\\MonCash\\Strategy\\$strg\\$strg"."Interface";
+                if (
+                    is_subclass_of($strategy, $namespacedInterface)
+                ) {
+                    $found[] = $strg;
+                }
+                if (count($found) > 1) {
+                    throw new StrategyException(
+                        'More than one Interface match. Specify the type in the second parameter.');
+                }
+            }
+            if (empty($found)) {
+                throw new StrategyException('Unrecognized strategy type for '.$strategy);
             }
 
-            $this->secretManager = new $secretManagerClass();
-        } elseif (is_subclass_of($manager, SecretManager::class)) {
-            $this->secretManager = new $manager();
-        } elseif ( ! isset($manager)) {
-            $this->secretManager = new DefaultSecretManager();
-        } else {
-            throw new SecretManagerException('INVALID_SECRET_MANAGER');
+            return $found[0];
         }
+    }
+
+
+    /**
+     * @param  string|StrategyInterface|null  $strategy
+     * @param  string|null  $type
+     *
+     * @return void
+     * @throws StrategyException
+     */
+    public function setStrategy(string|StrategyInterface|null $strategy, string|null $type = null): void
+    {
+        if (empty($type)) {  // Find Strategy Interface to know where to store it
+            $type = self::getStrategyType($strategy);
+        }
+
+        if (
+            is_subclass_of($type, StrategyInterface::class) === false ||
+            empty($package = self::STRATEGY_PACKAGE[$type])
+        ) {
+            throw new StrategyException('The provided type does not implement StrategyInterface');
+        }
+
+        if (is_object($strategy)) {
+            $object = $strategy;
+        } elseif (empty($strategy)) {
+            $object = new $package['default']();
+        } elseif (is_string($strategy)) {
+
+            if (class_exists($strategy) && is_subclass_of($strategy, $package['interface'])) {
+                $class = $strategy;
+            } elseif (
+                class_exists($package['namespace']."\\$strategy") &&
+                is_subclass_of($package['namespace']."\\$strategy", $package['interface'])
+            ) {
+                $class = $package['namespace']."\\$strategy";
+            } else {
+                throw new $package['exception']('INVALID');
+            }
+
+            $object = new $class();
+
+        } else {
+            throw new $package['exception']('INVALID');
+        }
+
+        $this[$package['property']] = $object;
     }
 
     /**
@@ -357,7 +457,7 @@ class Configuration implements ArrayAccess, Stringable
      * }  $config
      *
      * @return $this
-     * @throws SecretManagerException
+     * @throws ConfigurationException
      */
     public function update(
         #[ArrayShape([
@@ -365,10 +465,8 @@ class Configuration implements ArrayAccess, Stringable
             'lang'             => 'string',
             'clientSecret'     => 'string',
             'clientId'         => 'string',
+            'rsaPath'          => 'string',
             'businessKey'      => 'string',
-            'endpoint'         => 'string',
-            'restApi'          => 'string',
-            'gatewayBase'      => 'string',
             'timeout'          => 'string',
             'secretManager'    => SecretManager::class,
             'tokenMachine'     => TokenMachine::class,
@@ -378,103 +476,39 @@ class Configuration implements ArrayAccess, Stringable
         array $config
     ): Configuration {
 
-        // TODO
-        $this->clientId     = $config['clientId'] ?? $this->clientId ?? getenv('MONCASH_CLIENT_ID');
-        $this->clientSecret = $config['clientSecret'] ?? $this->clientSecret ?? getenv('MONCASH_CLIENT_SECRET');
-        $this->businessKey  = $config['businessKey'] ??
-                              $this->businessKey ??
-                              getenv('MONCASH_BUSINESS_KEY') ?? 'sandbox';
-        $this->mode         = $config['mode'] ?? $this->mode ?? getenv('MONCASH_MODE') ?? 'sandbox';
-        $this->timeout      = $config['timeout'] ?? $this->timeout ?? 60;
+        $hostConfig = self::getHostConfiguration();
 
-        $this->setSecretManager($config['secretManager'] ?? $this->secretManager ?? null);
+        $this->mode = $config['mode'] ?? $this->mode ?? $hostConfig['mode'] ?? 'sandbox';
+        if (in_array($this->mode, ['production', 'live', 'sandbox']) === false) {
+            throw new ConfigurationException('INVALID_MODE');
+        }
+        $this->mode = $this->mode === 'sandbox' ? $this->mode : 'production';
+
+
+        $this->clientId        = $config['clientId'] ?? $this->clientId ?? $hostConfig['clientId'];
+        $this->lang            = $config['lang'] ?? $this->lang ?? $hostConfig['lang'];
+        $this->businessKey     = $config['businessKey'] ??
+                                 $this->businessKey ??
+                                 $hostConfig['MONCASH_BUSINESS_KEY'];
+        $this->timeout         = $config['timeout'] ?? $this->timeout ?? 60;
+        $this->rsaPath         = $config['rsaPath'] ?? $this->rsaPath ?? $hostConfig['rsaPath'];
+        $this->gatewayBase     = self::GATEWAY_BASE[$this->mode];
+        $this->gatewayMerchant = self::GATEWAY_MERCHANT[$this->mode];
+        $this->restApi         = self::HOST_REST_API[$this->mode];
+
+        try {
+            $this->setSecretManager($config['secretManager'] ?? $this->secretManager ?? null);
+            $this->setToKenMachine($config['tokenMachine'] ?? $this->tokenMachine ?? null);
+            $this->setPhoneValidation($config['phoneValidation'] ?? $this->phoneValidation ?? null);
+            $this->setOrderIdGenerator($config['orderIdGenerator'] ?? $this->orderIdGenerator ?? null);
+        } catch (StrategyException $e) {
+            throw new ConfigurationException('FAILED_TO_SET_STRATEGY', 0, $e);
+        }
+
+
+        $this->clientSecret = $config['clientSecret'] ?? $this->clientSecret ?? $this->secretManager->getSecret();
 
         return $this;
-    }
-
-    /**
-     * @param  mixed  $offset
-     *
-     * @return bool
-     */
-    public function offsetExists(mixed $offset): bool
-    {
-        return isset($this->array[$offset]);
-    }
-
-    /**
-     * @param  mixed  $offset
-     *
-     * @return OrderIdGenerator|PhoneValidation|SecretManager|TokenMachine|mixed|string|null
-     */
-    public function offsetGet(
-        #[ExpectedValues([
-            'mode', 'clientSecret', 'clientId', 'businessKey', 'rsaPath', 'timeout',
-            'secretManager', 'tokenMachine', 'phoneValidation', 'orderIdGenerator'
-        ])]
-        mixed $offset
-    ): mixed {
-        return $this->array[$offset] ?? null;
-    }
-
-    /**
-     * @throws ConfigurationException
-     */
-    public function offsetSet(
-        #[ExpectedValues([
-            'mode', 'lang', 'clientSecret', 'clientId', 'businessKey', 'rsaPath', 'timeout',
-            'secretManager', 'tokenMachine', 'phoneValidation', 'orderIdGenerator'
-        ])]
-        mixed $offset,
-        mixed $value
-    ) {
-        if (is_null($offset)) {
-            throw new ConfigurationException('Invalid parameter');
-        } else {
-            //TODO
-            switch ($offset) {
-                case 'phoneValidation':
-                case 'secretManager':
-                case 'orderIdGenerator':
-                case 'tokenMachine' :
-                default :
-            }
-            $this->array[$offset] = $value;
-        }
-    }
-
-    /**
-     * @param  mixed  $offset
-     *
-     * @return void
-     */
-    public function offsetUnset(
-        #[ExpectedValues([
-            'mode', 'lang', 'clientSecret', 'clientId', 'businessKey', 'rsaPath', 'timeout',
-            'secretManager', 'tokenMachine', 'phoneValidation', 'orderIdGenerator'
-        ])]// bug with PhpStorm with constants  [WI-56028]
-        mixed $offset
-    ): void {
-        unset($this->array[$offset]);
-        //TODO replace with default value
-    }
-
-
-    public function __serialize(): array
-    {
-        return $this->array;
-    }
-
-
-    /**
-     * @param  array  $data
-     *
-     * @return void
-     * @throws SecretManagerException
-     */
-    public function __unserialize(array $data): void
-    {
-        $this->update($data);
     }
 
     /**
@@ -495,7 +529,7 @@ class Configuration implements ArrayAccess, Stringable
                 if ($rp->name === 'clientSecret') {
                     unset($vars[$prop]);
                 }
-            } catch (ReflectionException $e) {
+            } catch (ReflectionException) {
                 // Silent fail
             }
 
@@ -505,7 +539,7 @@ class Configuration implements ArrayAccess, Stringable
     }
 
     /**
-     * @param  bool  $secure Hide sensible values
+     * @param  bool  $secure  Hide sensible values
      *
      * @inheritdoc
      */

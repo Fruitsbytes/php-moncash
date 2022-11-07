@@ -35,7 +35,7 @@ class LibPhoneValidation implements PhoneValidationInterface
                 "country" => $country ?? null
             ];
         } catch (NumberParseException $e) {
-            throw  new  PhoneValidationExeption('COULD_NOT_PARSE_PHONE_NUMBER');
+            throw  new  PhoneValidationException('COULD_NOT_PARSE_PHONE_NUMBER');
         }
     }
 
@@ -55,7 +55,7 @@ class LibPhoneValidation implements PhoneValidationInterface
                 return $phoneUtil->isValidNumber($p);
             }
         } catch (NumberParseException $e) {
-            throw  new  PhoneValidationExeption('COULD_NOT_bVERIFY_PHONE_NUMBER');
+            throw  new  PhoneValidationException('COULD_NOT_bVERIFY_PHONE_NUMBER');
         }
     }
 
@@ -69,12 +69,12 @@ class LibPhoneValidation implements PhoneValidationInterface
             $p = $phoneUtil->parse($phone['number'], $phone['countru']);
 
             if ($p === null) {
-                throw  new  PhoneValidationExeption('COULD_NOT_Format_PHONE_NUMBER');
+                throw  new  PhoneValidationException('COULD_NOT_Format_PHONE_NUMBER');
             } else {
                return $phoneUtil->format($p, $format);
             }
         } catch (NumberParseException $e) {
-            throw  new  PhoneValidationExeption('COULD_NOT_PARSE_PHONE_NUMBER');
+            throw  new  PhoneValidationException('COULD_NOT_PARSE_PHONE_NUMBER');
         }
 
     }

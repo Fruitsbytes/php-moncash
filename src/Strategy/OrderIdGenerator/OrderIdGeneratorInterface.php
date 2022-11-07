@@ -2,9 +2,10 @@
 
 namespace Fruitsbytes\PHP\MonCash\Strategy\OrderIdGenerator;
 
+use Fruitsbytes\PHP\MonCash\Strategy\StrategyInterface;
 use Fruitsbytes\PHP\MonCash\Task;
 
-interface OrderIdGeneratorInterface
+interface OrderIdGeneratorInterface extends StrategyInterface
 {
 
     /**

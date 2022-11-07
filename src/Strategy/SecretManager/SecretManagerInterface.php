@@ -2,7 +2,9 @@
 
 namespace Fruitsbytes\PHP\MonCash\Strategy\SecretManager;
 
-interface SecretManagerInterface
+use Fruitsbytes\PHP\MonCash\Strategy\StrategyInterface;
+
+interface SecretManagerInterface extends StrategyInterface
 {
 
     /**
@@ -11,8 +13,7 @@ interface SecretManagerInterface
     function __construct();
 
     /**
-     * Check if all required dependencies and  configuration are available
-     * @return bool
+     * @inheritdoc
      * @throws SecretManagerException
      */
     function check(): bool;

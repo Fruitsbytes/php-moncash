@@ -2,17 +2,19 @@
 
 namespace Fruitsbytes\PHP\MonCash\Strategy\TokenMachine;
 
+use Fruitsbytes\PHP\MonCash\Strategy\StrategyInterface;
+
 /**
  * Get and maybe cache an authentication API token.
  */
-interface TokenMachineInterface
+interface TokenMachineInterface extends StrategyInterface
 {
 
     /**
-     * Check if all required dependencies and  configuration are available
-     * @return bool|TokenMachineException
+     * @inheritdoc
+     * @throws TokenMachineException
      */
-    function check(): bool|TokenMachineException;
+    function check(): bool;
 
     /**
      * Get a usable token

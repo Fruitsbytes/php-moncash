@@ -2,13 +2,14 @@
 
 namespace Fruitsbytes\PHP\MonCash\Strategy\PhoneValidation;
 
-interface PhoneValidationInterface
+use Fruitsbytes\PHP\MonCash\Strategy\StrategyInterface;
+
+interface PhoneValidationInterface extends StrategyInterface
 {
 
     /**
-     * Check if all required dependencies and  configuration are available
-     * @return bool
-     * @throws PhoneValidationExeption
+     * @inheritdoc
+     * @throws PhoneValidationException
      */
     function check(): bool;
 
@@ -16,7 +17,7 @@ interface PhoneValidationInterface
      * @param  array{ number: string|int, country: string, code: string}  $phone
      *
      * @return  array{ number: string|int, country: string, code: string}
-     * @throws PhoneValidationExeption
+     * @throws PhoneValidationException
      */
     static function parse(array $phone): array;
 
@@ -25,7 +26,7 @@ interface PhoneValidationInterface
      * @param  array{ number: string|int, country: string, code: string}  $phone
      *
      * @return bool
-     * @throws PhoneValidationExeption
+     * @throws PhoneValidationException
      */
     static function isValid(array $phone): bool;
 
@@ -34,7 +35,7 @@ interface PhoneValidationInterface
      * @param  string| null  $format  E164, International , ....
      *
      * @return string
-     * @throws PhoneValidationExeption
+     * @throws PhoneValidationException
      */
     static function format(array $phone, ?string $format): string;
 }

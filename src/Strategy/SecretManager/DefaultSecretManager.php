@@ -4,6 +4,7 @@ namespace Fruitsbytes\PHP\MonCash\Strategy\SecretManager;
 
 use Dotenv\Dotenv;
 use Dotenv\Exception\InvalidPathException;
+use Fruitsbytes\PHP\MonCash\Strategy\StrategyException;
 
 /**
  * Get Secret from .env file
@@ -14,6 +15,7 @@ class DefaultSecretManager implements SecretManagerInterface
      * @param  string|null  $path  path to the `.env` file
      *
      * @inheritdoc
+     * @throws StrategyException
      */
     public function __construct(null|string $path = null)
     {

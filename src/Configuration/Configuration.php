@@ -1,25 +1,25 @@
 <?php
 
-namespace Fruitsbytes\PHP\MonCash;
+namespace Fruitsbytes\PHP\MonCash\Configuration;
 
 use ArrayObject;
 use Dotenv\Dotenv;
 use Dotenv\Exception\InvalidPathException;
 use Fruitsbytes\PHP\MonCash\Strategy\OrderIdGenerator\OrderIdGeneratorException;
-use Fruitsbytes\PHP\MonCash\Strategy\OrderIdGenerator\SimpleOrderIdGenerator;
+use Fruitsbytes\PHP\MonCash\Strategy\OrderIdGenerator\OrderIdGeneratorInterface as OrderIdGenerator;
+use Fruitsbytes\PHP\MonCash\Strategy\OrderIdGenerator\UUIDOrderIdGenerator;
 use Fruitsbytes\PHP\MonCash\Strategy\PhoneValidation\DefaultHaitianPhoneValidation;
 use Fruitsbytes\PHP\MonCash\Strategy\PhoneValidation\LibPhoneValidation;
 use Fruitsbytes\PHP\MonCash\Strategy\PhoneValidation\PhoneValidationException;
+use Fruitsbytes\PHP\MonCash\Strategy\PhoneValidation\PhoneValidationInterface as PhoneValidation;
 use Fruitsbytes\PHP\MonCash\Strategy\SecretManager\DefaultSecretManager;
 use Fruitsbytes\PHP\MonCash\Strategy\SecretManager\SecretManagerException;
 use Fruitsbytes\PHP\MonCash\Strategy\SecretManager\SecretManagerInterface as SecretManager;
-use Fruitsbytes\PHP\MonCash\Strategy\TokenMachine\TokenMachineInterface as TokenMachine;
-use Fruitsbytes\PHP\MonCash\Strategy\OrderIdGenerator\OrderIdGeneratorInterface as OrderIdGenerator;
-use Fruitsbytes\PHP\MonCash\Strategy\PhoneValidation\PhoneValidationInterface as PhoneValidation;
 use Fruitsbytes\PHP\MonCash\Strategy\StrategyException;
 use Fruitsbytes\PHP\MonCash\Strategy\StrategyInterface;
 use Fruitsbytes\PHP\MonCash\Strategy\TokenMachine\FileTokenMachine;
 use Fruitsbytes\PHP\MonCash\Strategy\TokenMachine\TokenMachineException;
+use Fruitsbytes\PHP\MonCash\Strategy\TokenMachine\TokenMachineInterface as TokenMachine;
 use JetBrains\PhpStorm\ArrayShape;
 use JetBrains\PhpStorm\ExpectedValues;
 use ReflectionException;
@@ -30,7 +30,7 @@ use Stringable;
 /**
  * Configuration helper fpr this library
  */
-class Configuration  extends ArrayObject implements Stringable
+class Configuration extends ArrayObject implements Stringable
 {
 
     /**
@@ -73,7 +73,7 @@ class Configuration  extends ArrayObject implements Stringable
         ],
         'OrderIdGenerator' => [
             "exceptionClass" => OrderIdGeneratorException::class,
-            "default"        => SimpleOrderIdGenerator::class,
+            "default"        => UUIDOrderIdGenerator::class,
             "interface"      => "Fruitsbytes\\PHP\\MonCash\\Strategy\\OrderIdGenerator\\OrderIdGeneratorInterface",
             "nameSpace"      => "Fruitsbytes\\PHP\\MonCash\\Strategy\\OrderIdGenerator",
             "propertyName"   => 'orderIdGenerator'
@@ -115,7 +115,7 @@ class Configuration  extends ArrayObject implements Stringable
         'secretManager'    => DefaultSecretManager::class,
         'tokenMachine'     => FileTokenMachine::class,
         'phoneValidation'  => LibPhoneValidation::class,
-        'orderIdGenerator' => OrderIdGenerator::class,
+        'orderIdGenerator' => UUIDOrderIdGenerator::class,
     ];
 
 
@@ -134,7 +134,7 @@ class Configuration  extends ArrayObject implements Stringable
     /**
      * @var string|null
      */
-    #[\SensitiveParameter] // PHP 8.2
+    #[\SensitiveParameter] // TODO PHP 8.2
     public string|null $clientSecret;
 
     /**
@@ -224,7 +224,7 @@ class Configuration  extends ArrayObject implements Stringable
      * Creates a new configuration instance. Any unspecified values will
      * automatically be fetched from the host environment
      *
-     * @param  array{
+     * @param  Configuration | array{
      *     'mode': string, 'clientSecret' : string, 'clientId': string, 'lang': string,
      *     'businessKey': string, 'rsaPath': string, 'timeout':float|int,
      *     'secretManager' : SecretManager,
@@ -240,6 +240,7 @@ class Configuration  extends ArrayObject implements Stringable
      * @since    1.0.0
      */
     public function __construct(
+
         #[ArrayShape([
             'mode'             => 'string',
             'lang'             => 'string',
@@ -253,7 +254,7 @@ class Configuration  extends ArrayObject implements Stringable
             'phoneValidation'  => PhoneValidation::class,
             'orderIdGenerator' => OrderIdGenerator::class,
         ])]
-        array $config = []
+        Configuration|array $config = []
     ) {
         parent::__construct($config, self::ARRAY_AS_PROPS);
         $this->update($config);
@@ -273,7 +274,7 @@ class Configuration  extends ArrayObject implements Stringable
      * }
      * @throws ConfigurationException
      */
-    public static function getHostConfiguration(bool $reload = false, string $path = __DIR__.'/../src/'): array
+    private static function getHostConfiguration(bool $reload = false, string $path = __DIR__.'/../src/'): array
     {
         if ($reload) {
             self::loadHostConfig($path);
@@ -304,7 +305,7 @@ class Configuration  extends ArrayObject implements Stringable
      * @return void
      * @throws ConfigurationException
      */
-    public static function loadHostConfig(null|string $path = __DIR__.'/../src/'): void
+    private static function loadHostConfig(null|string $path = __DIR__.'/../src/'): void
     {
         try {
             $dotenv = Dotenv::createImmutable($path);
@@ -315,14 +316,13 @@ class Configuration  extends ArrayObject implements Stringable
 
     }
 
-
     /**
      * @param  string|SecretManager|null  $manager
      *
      * @return void
      * @throws SecretManagerException|StrategyException
      */
-    public function setSecretManager(string|SecretManager|null $manager = null): void
+    private function setSecretManager(string|SecretManager|null $manager = null): void
     {
         $this->setStrategy($manager, 'SecretManager');
     }
@@ -331,7 +331,7 @@ class Configuration  extends ArrayObject implements Stringable
     /**
      * @throws StrategyException|TokenMachineException
      */
-    public function setToKenMachine(string|ToKenMachine|null $tokenMachine = null)
+    private function setToKenMachine(string|ToKenMachine|null $tokenMachine = null)
     {
         $this->setStrategy($tokenMachine, 'ToKenMachine');
     }
@@ -339,7 +339,7 @@ class Configuration  extends ArrayObject implements Stringable
     /**
      * @throws StrategyException|PhoneValidationException
      */
-    public function setPhoneValidation(string|PhoneValidation|null $phoneValidation = null)
+    private function setPhoneValidation(string|PhoneValidation|null $phoneValidation = null)
     {
         $this->setStrategy($phoneValidation, 'PhoneValidation');
     }
@@ -398,7 +398,7 @@ class Configuration  extends ArrayObject implements Stringable
      * @return void
      * @throws StrategyException
      */
-    public function setStrategy(string|StrategyInterface|null $strategy, string|null $type = null): void
+    private function setStrategy(string|StrategyInterface|null $strategy, string|null $type = null): void
     {
         if (empty($type)) {  // Find Strategy Interface to know where to store it
             $type = self::getStrategyType($strategy);
@@ -504,7 +504,6 @@ class Configuration  extends ArrayObject implements Stringable
         } catch (StrategyException $e) {
             throw new ConfigurationException('FAILED_TO_SET_STRATEGY', 0, $e);
         }
-
 
         $this->clientSecret = $config['clientSecret'] ?? $this->clientSecret ?? $this->secretManager->getSecret();
 

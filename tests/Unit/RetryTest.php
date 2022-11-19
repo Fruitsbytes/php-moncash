@@ -3,8 +3,8 @@
 namespace Fruitsbytes\Tests\Unit;
 
 use Exception;
-use Fruitsbytes\PHP\MonCash\APIException;
-use Fruitsbytes\PHP\MonCash\Retry;
+use Fruitsbytes\PHP\MonCash\API\APIException;
+use Fruitsbytes\PHP\MonCash\API\Retry;
 use PhpParser\Node\Expr\Closure;
 use PHPUnit\Framework\TestCase;
 use TypeError;

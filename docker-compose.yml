@@ -1,0 +1,12 @@
+version: '3'
+services:
+    web:
+        image: jakubboucek/lamp-devstack-php:8-debug
+        environment:
+            APP_DEBUG: 1
+            TZ: America/Port-au-Prince
+        ports:
+            - "127.0.0.1:8080:80"
+        restart: always
+        volumes:
+            - ".:/var/www/html"

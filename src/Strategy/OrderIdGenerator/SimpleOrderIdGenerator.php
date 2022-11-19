@@ -3,7 +3,7 @@
 namespace Fruitsbytes\PHP\MonCash\Strategy\OrderIdGenerator;
 
 use Exception;
-use Fruitsbytes\PHP\MonCash\Retry;
+use Fruitsbytes\PHP\MonCash\API\Retry;
 use Fruitsbytes\PHP\MonCash\Task;
 
 /**
@@ -28,9 +28,10 @@ class SimpleOrderIdGenerator implements OrderIdGeneratorInterface
     }
 
     /**
+     * @param  bool $thorough Add extensive test that may be memory intensive.
      * @inheritDoc
      */
-    public function check(): bool
+    public function check( bool|null $thorough = false): bool
     {
 
         /**
@@ -44,10 +45,12 @@ class SimpleOrderIdGenerator implements OrderIdGeneratorInterface
             }
         }
 
-        try {
-            $this->logID('monCash_file_test');
-        } catch (Exception $e) {
-            throw new OrderIdGeneratorException("Could not write to temp folder.");
+        if ($thorough) {
+            try {
+                $this->logID('monCash_file_test');
+            } catch (Exception $e) {
+                throw new OrderIdGeneratorException("Could not write to temp folder.", 0, $e);
+            }
         }
 
         return true;
@@ -84,7 +87,6 @@ class SimpleOrderIdGenerator implements OrderIdGeneratorInterface
         } catch (Exception $e) {
             throw new OrderIdGeneratorException('Error while generating ID.', 0, $e);
         }
-
 
         return $id;
     }
@@ -129,7 +131,7 @@ class SimpleOrderIdGenerator implements OrderIdGeneratorInterface
         foreach ($files as $file) {
             $ext = pathinfo($file, PATHINFO_EXTENSION);
             if ($ext === 'i') {
-                $creationDate = filectime($ext);
+                $creationDate = filectime($file);
                 $cursor       = strtotime("-$ttl second");
 
                 if ($cursor > $creationDate) {

@@ -66,9 +66,7 @@ MONCASH_LANG="en"
 #### 4.1.3 Override global environment
 
 ```php
-use Fruitsbytes\PHP\MonCash\API;
-use Fruitsbytes\PHP\MonCash\APIException;
-use Fruitsbytes\PHP\MonCash\PaymentResponse;
+use Fruitsbytes\PHP\MonCash\API\API;use Fruitsbytes\PHP\MonCash\API\APIException;use Fruitsbytes\PHP\MonCash\PaymentResponse;
 
 /**
 * @var string $client_id

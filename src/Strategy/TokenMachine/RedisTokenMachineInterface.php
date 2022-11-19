@@ -2,13 +2,19 @@
 
 namespace Fruitsbytes\PHP\MonCash\Strategy\TokenMachine;
 
+use Fruitsbytes\PHP\MonCash\Configuration\Configuration;
 use Fruitsbytes\PHP\MonCash\Strategy\SecretManager\SecretManagerException;
 
 class RedisTokenMachineInterface implements TokenMachineInterface
 {
 
+    public function __construct(Configuration $configuration = null)
+    {
+        $this->check();
+    }
+
     /**@inheritdoc */
-    function check(): bool|TokenMachineException
+    function check(): bool
     {
         // TODO: Implement check() method.
         return  false;

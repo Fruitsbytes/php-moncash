@@ -4,6 +4,16 @@
 
 `Version 1.0.0`
 
+[en]: ./README.md "English translation"
+
+[fr]: ./README.md "Traduction française"
+
+[ht]: ./README.md "TRadiksyon kreyòl"
+
+
+🌎 i18n:  [`🇺🇸`][en] • [🇫🇷][fr] • [🇭🇹][ht]
+
+
 # Postman
 
 This is a Postman API similar to the [the official one](https://documenter.getpostman.com/view/1199944/UVeJKju3)
@@ -30,28 +40,23 @@ Some values are automatically saved to be shared for the next API call in the pa
 > the `Create Payment` call from the client endpoints automatically  reserves the `payment_token.token` for the `Payment/Redirect` request.
 > If you leave the `token` parameter empty it will use the last saved token.
 
-### ✨ RSA base64 encryption 
+### ✨ RSA Base64 encryption
+For the Client button (_Client2: *_) requests the request body is automatically encrypted. Only make sur to set the 
 
 Enjoy!
 
 ## How to use
 
-1) Download the file [MonCash_API_Collection_v1.0.0.json](./MonCash_API_Collection_v1.0.0.json).
-2) Click Import
+Fork the [API](https://www.postman.com/fruitsbytes/workspace/fruitsbytes/api/c5cf75e5-32be-4296-bf15-f312b7cea489) and 
+set the environment variables. You can use the `MonCash - Sandbox` environment  as a guide.
+<p align="center">
+  <img src="./assets/images/selectEnv.gif" alt="Select env demo">
+</p>
 
-![Step1-3](./assets/images/steps1-3.png)
-
-3) Click Choose Files and specify `MonCash_API_Collection_v1.0.0.json`.
-
-![Step1-3](./assets/images/steps-4.png)
-
-4) Click the eye icon (![eye]()) to setup an Environment variables ( learn
+(learn
    more [here](https://medium.com/apis-with-valentine/demystifying-postman-variables-how-and-when-to-use-different-variable-scopes-66ad8dc11200)
    and [here](https://learning.postman.com/docs/sending-requests/variables/) ).
-4) Click Add.
-5) Enter an Environment name.
-6) Copy your API Keys.
-1) Enter a Key and a Value.
+
 
 ### More on how to manage Postman collection
 
@@ -68,4 +73,6 @@ Enjoy!
 | Generate a Collection From a Specification    | [![Video Importing and exporting collections](https://img.youtube.com/vi/gljWt9tDKOY/1.jpg)](https://www.youtube.com/watch?v=gljWt9tDKOY) |    
        
      
-
+<p align="center">
+<img src="./tonton.svg" alt="">
+</p>

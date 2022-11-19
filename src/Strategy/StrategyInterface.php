@@ -3,8 +3,11 @@
 namespace Fruitsbytes\PHP\MonCash\Strategy;
 
 
+use Fruitsbytes\PHP\MonCash\Configuration\Configuration;
+
 interface StrategyInterface
 {
+
     /**
      * Check if all required dependencies and  configuration are available
      * @return bool

@@ -3,8 +3,7 @@
 namespace Fruitsbytes\PHP\MonCash\Strategy\OrderIdGenerator;
 
 use Exception;
-use Fruitsbytes\PHP\MonCash\Retry;
-use JetBrains\PhpStorm\ExpectedValues;
+use Fruitsbytes\PHP\MonCash\API\Retry;
 use Ramsey\Uuid\Uuid;
 
 /**
@@ -17,7 +16,7 @@ class UUIDOrderIdGenerator extends SimpleOrderIdGenerator implements OrderIdGene
     /**
      * @inheritDoc
      */
-    public function check(): bool
+    public function check(bool|null $thorough = false): bool
     {
 
         /**
@@ -51,17 +50,15 @@ class UUIDOrderIdGenerator extends SimpleOrderIdGenerator implements OrderIdGene
      * @param  int|string  $version  RFC 4122 version, either  fro uniqueness
      */
     public function getNewID(
-        bool $log = true,
-        bool $verifyLocally = true,
-        #[ExpectedValues([1, 2, 3, 4, 5, 6, 7, 'GUID'])]
-        int|string $version = 4
+        bool $log = false,
+        bool $verifyLocally = false,
     ): string {
 
-        $id = ''; //TODO
+        $id = '';
 
         try {
             $retry = new Retry(function () use ($verifyLocally, $log, &$id) {
-                $found = uniqid(rand(), true);
+                $found = (string) Uuid::uuid4();
 
                 $path = self::nameToPath($found);
 

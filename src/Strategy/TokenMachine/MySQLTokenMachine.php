@@ -2,12 +2,16 @@
 
 namespace Fruitsbytes\PHP\MonCash\Strategy\TokenMachine;
 
-use Fruitsbytes\PHP\MonCash\Strategy\SecretManager\SecretManagerException;
 
 class MySQLTokenMachine implements TokenMachineInterface
 {
+    public function __construct()
+    {
+        $this->check();
+    }
+
     /**@inheritdoc */
-    function check(): bool|TokenMachineException
+    function check(): bool
     {
         // TODO: Implement check() method.
         return  false;

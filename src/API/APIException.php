@@ -1,6 +1,6 @@
 <?php
 
-namespace Fruitsbytes\PHP\MonCash;
+namespace Fruitsbytes\PHP\MonCash\API;
 
 use Exception;
 use Throwable;

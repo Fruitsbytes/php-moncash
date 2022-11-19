@@ -1,13 +1,27 @@
+# Moncash
+
+PHP library
+
+[en]: ./README.md "English translation"
+
+[fr]: ./README.fr.md "Traduction française"
+
+[ht]: ./README.ht.md "TRadiksyon kreyòl"
+
+
+🌎 i18n:  [`🇺🇸`][en] • [🇫🇷][fr] • [🇭🇹][ht]
+
+
 <p align="center">
 
 <img  src="./FruitsBytes-moncash-php.png?v=2" alt="FruitsBytes-Moncash-PHP">
 
-[![Latest Stable Version](http://poser.pugx.org/fruitsbytes/php-moncash/v?style=for-the-badge)](https://packagist.org/packages/fruitsbytes/php-moncash)
-[![Total Downloads](http://poser.pugx.org/fruitsbytes/php-moncash/downloads?style=for-the-badge)](https://packagist.org/packages/fruitsbytes/php-moncash)
-[![Latest Unstable Version](http://poser.pugx.org/fruitsbytes/php-moncash/v/unstable?style=for-the-badge)](https://packagist.org/packages/fruitsbytes/php-moncash)
-[![License](http://poser.pugx.org/fruitsbytes/php-moncash/license?style=for-the-badge)](https://packagist.org/packages/fruitsbytes/php-moncash)
-[![PHP Version Require](http://poser.pugx.org/fruitsbytes/php-moncash/require/php?style=for-the-badge)](https://packagist.org/packages/fruitsbytes/php-moncash)
-[![Version](http://poser.pugx.org/fruitsbytes/php-moncash/version?style=for-the-badge)](https://packagist.org/packages/fruitsbytes/php-moncash)
+[![Latest Stable Version](http://poser.pugx.org/fruitsbytes/php-moncash/v)](https://packagist.org/packages/fruitsbytes/php-moncash)
+[![Total Downloads](http://poser.pugx.org/fruitsbytes/php-moncash/downloads)](https://packagist.org/packages/fruitsbytes/php-moncash)
+[![Latest Unstable Version](http://poser.pugx.org/fruitsbytes/php-moncash/v/unstable)](https://packagist.org/packages/fruitsbytes/php-moncash)
+[![License](http://poser.pugx.org/fruitsbytes/php-moncash/license)](https://packagist.org/packages/fruitsbytes/php-moncash)
+[![PHP Version Require](http://poser.pugx.org/fruitsbytes/php-moncash/require/php)](https://packagist.org/packages/fruitsbytes/php-moncash)
+[![Version](http://poser.pugx.org/fruitsbytes/php-moncash/version)](https://packagist.org/packages/fruitsbytes/php-moncash)
 
 <p>
 <small> <b>*</b> The Digicel&trade;, MonCash&trade;, Sogebank&trade; and all other trademarks, logos and brand names are the property
@@ -26,51 +40,30 @@ Digicel is a pioneer in mobile money. Their financial services  are currently ex
 </small>
 </p>
 
-Digicel Moncash PHP library
-=============
-
-[en]: ./README.md "English translation"
-
-[fr]: ./README.fr.md "Traduction française"
-
-[ht]: ./README.ht.md "TRadiksyon kreyòl"
-
-
-🌎 i18n:  [🇺🇸][en] • [🇫🇷][fr] • [🇭🇹][ht]
 
 A library to facilitate Digicel MonCash mobile money integration on your PHP projects via
-their [API](https://sandbox.moncashbutton.digicelgroup.com/Moncash-business/resources/doc/RestAPI_MonCash_doc.pdf). It
-handles both the <u>base</u> (client) and <u>merchant</u> use cases. It
+their [API](https://sandbox.moncashbutton.digicelgroup.com/Moncash-business/resources/doc/RestAPI_MonCash_doc.pdf). For
+now it
+handles the <u>base</u> (client) use cae. The <u>merchant</u> use cases wil be available soon. It
 is part of the MonCash SDK provided by FruitsBytes.
 
-Other libraries for this SDK:
-
-+ 🚧  [Laravel]() - Package
-+ 🚧  [Wordpress](#wordpress) - Plugin with WooCommerce integration
-+ 🚧  [Shopify](#shopify) - App
-+ 🚧  [JavaScript](#javaScript) - Support for NodesJs servers and Web clients
-+ 🚧  [Angular](#angular) - Configurable Button
-+ 🚧  [ReactJS](#reactJS) - Configurable Button
-+ 🚧  [VueJS](#vueJS) - Configurable Button
-+ 🚧  [Capacitor](#capacitor) - IonicFramework Plugin for Android and IOS with deepLink integration support
-
-<div id="features"></div> 
 
 ------------
 
-## Features
+## [Features](#features)
 
-- Authentication
-- Traffic optimisation (`Advanced`)
-- Security: Secret Management (`Advanced`)
-- Payment
-- Transfer
-- 🚧 Idempotence (`Advanced`) 🚧
-- Unique orderID generator
-- HTML button
-- 🚧 Localization (`Advanced`) 🚧
-- Retry (`Advanced`)
-- Phone Validation (`Advanced`)
+- [x] Client side Adapter (Payment, Transfer, ...)
+    - Render Button
+- [x] Traffic optimisation (`Advanced`)
+- [x] Security: Secret Management (`Advanced`)
+- [x] Unique orderID generator
+- [x] Retry (`Advanced`)
+- [x] Phone Validation (`Advanced`)
+- [ ] Client Button, No Backend (Encrypted, client side button)
+- [ ] Merchant App  (Cash-In , Cash-Out, ...)
+- [ ] Idempotence (`Advanced`)
+- [ ] Localization (`Advanced`)
+- [ ] Task (Recurring payments, garbage collector,...)
 
 <p>Check the  <a href="/CHANGELOG.md">CHANGELOG</a> for additional information on breaking changes and new features.</p>
 
@@ -79,12 +72,12 @@ Other libraries for this SDK:
 
 ------------
 
-## Installation
+## [Installation](#installation)
 
 The preferred way to install this extension with all it's dependencies, is
 through [composer](http://getcomposer.org/download/).
 
-### Terminal
+### Shell
 
 You can run the installation composer command from the root of your project:
 
@@ -119,7 +112,7 @@ composer install
 
 ------------
 
-## Prerequiste
+## [Prerequiste](#prerequisite)
 
 In order to interact with the Digicel's API, you need to the credentials for your buisiness application. You can scope
 your business operations with multiple sets of credentials. For example you can have on set for websites and another one
@@ -143,153 +136,151 @@ To create and manage your credentials:
 
 ---
 
-## Quick Start
+## [Quick Start](Quick Start)
 
 After retrieving the credentials ab installing the package you are ready to start using it.
 
-Make sure the environment variables are set:
+You can setup a .env file in the root of your project to automatically configure the client:
 
 ```shell
+# .env 
+
 MONCASH_CLIENT_ID="<!your-client-id/>"
 MONCASH_CLIENT_SECRET="<!your-client-secret/>"
-MONCASH_BUSINESS_KEY="<!/>"
+MONCASH_BUSINESS_KEY="<!--------/>"
 MONCASH_MODE="sandbox"
 MONCASH_LANG="env"
 MONCASH_RSA_KEY_PATH="/secure-path-to-rsa-dir/rsa.txt"
 ```
 
-### Usage
+```php
+// index.php
+
+use Fruitsbytes\PHP\MonCash\API\Client;
+
+$client = new Client();
+
+```
+
+You override the Environment variables or completely ignore them:
 
 ```php
 
-use Fruitsbytes\PHP\MonCash\API;
-use Fruitsbytes\PHP\MonCash\Configuration;
+use Fruitsbytes\PHP\MonCash\Configuration\Configuration;
 
-// Create a new instance
-$mc = new API();
-
-// Override global Configuration
-$config =  new Configuration([ 'lang'=>'ht', 'mode'=>'production']);
-$api = new API($config);
+$configuration = new Configuration(["lang"=>"ht"]);
 
 ```
+
+The default no config value :
+
+```php
+// src/Configuration/Configuration.php
+
+ const DEFAULT_CONFIG = [
+        'mode'             => 'sandbox',
+        'lang'             => 'en',
+        'clientSecret'     => '', 
+        'clientId'         => '',
+        'businessKey'      => '',
+        'rsaPath'          => './rsa.text',
+        'timeout'          => 60,
+        'secretManager'    => DefaultSecretManager::class,
+        'tokenMachine'     => FileTokenMachine::class,
+        'phoneValidation'  => LibPhoneValidation::class,
+        'orderIdGenerator' => UUIDOrderIdGenerator::class,
+    ];
+
+```
+
+### Usage
 
 #### Client
 
 For client facing websites and mobile app, where the client iniates the payment.
 
 ```php
-// Create a payment
+// Create a payment & redirect user
+use Fruitsbytes\PHP\MonCash\API\Order;
+use Fruitsbytes\PHP\MonCash\APIException;
+use Exception;
+
 try{
-    $payment = $api->client->createPayment($oderId, $amount);
-}catch( MonCash\APIException $e){ 
+   $order = new Order($amount); // if you have your own orderID `new  Order($amount, $uuid)` 
+   $payment = $client->createAndRedirect($order);
+}catch( APIException $e){ 
+   $message = $e->getMessage();
+}
+catch( Exception $e){ 
    $message = $e->getMessage();
 }
 
+// get payment by orderID if ypui do not habe the transation ID yet
+$payment = $client->getPaymentByOrderId($order->id);
 
-# Re-Authenticate
-$response = $api->auth();
+// get payment by transactionID when transaction is finished
+$payment = $client->getPaymentByTransactionId($transactionID);
 
-# Generate Button form html code
-$button = $api->button( $oderId, $amount);
+
+
+```
+
+#### Button
+
+The button, when clicked, will create the transaction and redirects the user to the
+
+```php
+// Generate Button form html code
+use Fruitsbytes\PHP\MonCash\Button\Button;
+
+$buttonConfig= [
+    "height" => 48,
+    "border" => false,
+    "animation" => true 
+];
+$button = new Button( $order, $clientConfig, $buttonConfig);
+
 $htmlButton = $button->html();
 print($htmlButton);
 
-# Use the Stringable interface
+// or Use the Stringable interface
 print($button);
 
-# Output Button form in the current page context
+// Output Button form in the current page context
 $buttonEN = $api->button( $oderId, $amount, 'en');
-?>
-
-<div>
-    <h4>Payment methods:</h4>
-</div>
-
-<?php $buttonEN->render(); ?>
-
 ```
+
+You can render the template directly
 
 ```php
-# catch server response
-$response  = API::intercept();
-
-
+<?php $buttonEN->render(); ?>
 ```
+
+<div align="center">
+ <img src="./assets/images/button-config.png" width="500" alt="">
+<p>Button config Playground</p>
+</div>
 
 #### Merchant
 
-For application aimed at store clerks or business owners where the client is present at the time of the transaction.
+For applications aimed at store clerks or business owners where the client is present at the time of the transaction. It
+handles Cash-In and Cash-Out scenarios.
 
-```php
+==== 🚧 Coming soon =====
 
-use Fruitsbytes\PHP\MonCash\API\CashIO;
-use Fruitsbytes\PHP\MonCash\API\CashIOException;
-
-# Send payment request (cashIn) to client
-$sellArabicaCoffee = $api->merchant->cashIn(
-                                         'rebo-5ff92ef8-5d56-11ed-9b6a-0242ac120002', // OrderID, reference number
-                                         '50934524301' , //  wallet phone number
-                                           50.0 // price in gourdes
-                                             );
-# or
-try {
- $cashIn = new CashIO($orderID, $phoneNumber , $amount);
- $sellPrestigeBeer = $api->merchant->cashIn($cashIn, true); // uses $api Configuration
- 
- # or 
- $sellPrestigeBeer = $cashIn->process(true); // will use default global config
- 
-}catch( CashIOException $e){ 
-   $message = $e->getMessage();
-}
-
-
-# Cash out - Give money + throw error on failure
-$payrollTiJean = $api->merchant->cashOut($orderID, $phoneNumber , $amount, true);
-
-# Bulk async 
-/**
-* @var CashIO[]
- */
-$payrolls = $api->merchant->cashOutAsyncBulk(
-  list : [
-            [$orderID1, $phoneNumber1 , $amount1],
-            [$orderID2, $phoneNumber2 , $amount2],
-            [$orderID3, $phoneNumber3 , $amount3],
-            ...,
-            [$orderID12, $phoneNumber12 , $amount12]
-        ]
-    );
-
-
-
-# Check cashIn/Out status
-$sellArabicaCoffee->status; // successful - cached
-$sellPrestigeBeer->status; // failed - cached
-$api->merchant->io(['transactionIr' => '12323232'])->get()->status;//failed - fresh. use $sellPrestigeBeer->statusVersion  to get the last time this information was checkedn
-
-# Get transaction ID
-$api->merchant->io(['oderId' => 'rebo-5ff92ef8-5d56-11ed-9b6a-0242ac120002'])->get()->transacinId; // 12323232
-
-
-
-
-```
-
-For a complete guide please check the [documentation](./docs/en/0_ABOUT.md) or the [code examples](./demo).
+For a complete guide please check the [documentation](./docs/en/ABOUT.md) or the [code examples](./demo).
 
 
 
 -----------
 
+## [Playground](#playground)
 
-## Playground
-You can check the Postman API [online](#todo) or [import](#todo) the .json from this repository.
+You can check the Postman API [online]() or [import](./Postman) the .json from this repository.
 
 You can also test your credentials on the OpenAPI 3.1 [documentation](#).
 
-## TODO
+## [TODO](#todo)
 
 - [ ] Version 2.0 migrate to php 8.1 + PhpUnit10 (2023-02-03)
 - [ ] Add additional tests
@@ -310,14 +301,16 @@ You can also test your credentials on the OpenAPI 3.1 [documentation](#).
 - [ ] Add demos
 - [ ] Provide Postman collection
 - [ ] Provide OpenApi3.1 Documentation
-- [ ] Upgrade to Async support with PHP Fibers 
+- [ ] Upgrade to Async support with PHP Fibers
 - [ ] Make a [Github Page](https://pages.github.com/)
 
 ---
 
-## Contributing
+## [Contribution](#contribution)
 
-### Test
+All pull requests and suggestions are welcomed. If there is a particular feature you are struggling make a pull reque
+
+## [Test](#test)
 
 When modifyiing
 To run the test use the following shell command from this directory.
@@ -338,7 +331,22 @@ vendor\bin\phpunit
 
 ---
 
-## Other
+## [Other](#Other)
+
+#### Other Repositories around this SDK:
+
+| Repo                                                                       | Description                                                                                                        |                                     Version                                     | Status |
+|----------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------|:-------------------------------------------------------------------------------:|:------:|
+| [Laravel examples](https://github.com/Fruitsbytes/Laravel-Moncash-Example) | Examples using pure laravel codes, no- external libraries.                                                         |                                     v1.1.0                                      |   ✅    |
+| [Laravel]()                                                                | A fully funtional package for laravel                                                                              |              <b>alpha</b> <br/> <small>not ready to share</small>               |   🚧   |
+| [Wordpress](#wordpress)                                                    | Use MonCash on Wordpress sites. Also available for Woocommerce integration                                         |              <b>alpha</b> <br/> <small>not ready to share</small>               |   🚧   |
+| [Shopify](#shopify)                                                        | Use MonCash as a shopify payment method                                                                            |              <b>alpha</b> <br/> <small>not ready to share</small>               |   🚧   |
+| [NodeJS](#nodeJS)                                                          | Using NodeJS as a server this can be used with idependently or as an API (for non-SSR websites for example).       |              <b>alpha</b> <br/> <small>not ready to share</small>               |   🚧   |
+| [Javascript Examples](#javasccript-examples)                               | Repositories with a general idea on how to consume the API with several use case and JS Frameworks native solution |              <b>alpha</b> <br/> <small>not ready to share</small>               |   🚧   |
+| [Angular](#angular)                                                        | Configurable Button + Server side compolnents (Angular Universal)                                                  |              <b>alpha</b> <br/> <small>not ready to share</small>               |   🚧   |
+| [ReactJS](#reactJS)                                                        | Configurable Button                                                                                                |              <b>alpha</b> <br/> <small>not ready to share</small>               |   🚧   |
+| [VueJS](#vueJS)                                                            | Configurable Button                                                                                                |              <b>alpha</b> <br/> <small>not ready to share</small>               |   🚧   |
+| [Capacitor](#capacitor)                                                    | IonicFramework Plugin for Android and IOS with deepLink integration support and extra security                     |              <b>alpha</b> <br/> <small>not ready to share</small>               |   🚧   |
 
 #### MonCash Documentation
 
@@ -361,19 +369,44 @@ vendor\bin\phpunit
 | Kijan pou mete Moncash sou sit ou pou w vann (🇭🇹)  <br/> ✍ Certil Rémy                                                   | [![Video1](https://img.youtube.com/vi/lE3ejFT11_w/1.jpg)](https://www.youtube.com/watch?v=lE3ejFT11_w) |
 | Comment Intégrer l'onglet Moncash Pay à votre commerce online - Technopro Web (🇫🇷) <br/> ✍  Osirus Kurt, RIP 🕊 | [![Video2](https://img.youtube.com/vi/NiWYrO_E5ik/1.jpg)](https://www.youtube.com/watch?v=NiWYrO_E5ik) |
 
-## 🔐 Security
+## [🔐 Security](#security)
 
 If you discover a security vulnerability within this package, please send an email
 to [security@anbapyezanman.com](mailto:security@anbapyezanman.com). All security vulnerabilities will be addressed as
 soon as possible. You may view our full security policy [here](./SECURITY.md).
 
-## ⚖ License
+## [⚖ License](#license)
 
 this library is licensed under [The MIT License](LICENSE).
 
-## 🏢 For Enterprise
+## [ 🛟 Need help?](#help)
+
+Don't hesitate to check the discussion page and check if the issue is not addressed yet. You can start a new discussion
+ineed be.
+
+If you are an upcoming startup, a student or don't have the budget for consultation fees, it will take longer but we can
+submit a public repo illustrating the help you need as long as it will benefit the rest of the community:
+
+Contact us at <a href="mailto:help@anbapyezanman.com" target="_blank">help@anbapyezanman.com</a>
+
+<table>
+<tr valign="middle">
+<td>
+<a href="https://www.youtube.com/channel/UC14dR51q2_mFCQulsmecL1Q" target="_blank">
+<img src="./assets/images/youtube.png?v=2" alt="YT">
+</a>
+</td>
+<td >
+You can also check our <a href="https://www.youtube.com/channel/UC14dR51q2_mFCQulsmecL1Q" target="_blank">Youtube Channel</a>
+</td>
+</tr>
+</table>
+
+### For Enterprise
 
 [Fruitsbytes](fruitsbytes.com) can deliver commercial support and maintenance for your applications. Save time, reduce
 risk, and improve code health, while paying the maintainers of the exact dependencies you use.
 
-contact us at [inquery@anbapyezanman.com](mailto:inquery@anbapyezanman.com)
+Contact us at [business@anbapyezanman.com](mailto:business@anbapyezanman.com)
+
+

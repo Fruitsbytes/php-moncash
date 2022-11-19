@@ -10,6 +10,8 @@ use Fruitsbytes\PHP\MonCash\Strategy\StrategyInterface;
 interface TokenMachineInterface extends StrategyInterface
 {
 
+    public function __construct();
+
     /**
      * @inheritdoc
      * @throws TokenMachineException
@@ -21,9 +23,9 @@ interface TokenMachineInterface extends StrategyInterface
      *
      * @param  bool  $new  if true get a fresh token do not tru to cache it
      *
-     * @return string
+     * @return string|bool
      */
-    function getToken(bool $new = false): string;
+    function getToken(bool $new = false): string|bool;
 
     /**
      * Checks if the token is usable.

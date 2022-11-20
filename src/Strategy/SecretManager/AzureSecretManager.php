@@ -17,4 +17,8 @@ class AzureSecretManager implements SecretManagerInterface
         // TODO: Implement getSecret() method.
         return '';
     }
+
+    public function __construct()
+    {
+    }
 }

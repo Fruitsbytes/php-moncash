@@ -6,6 +6,7 @@ use Exception;
 
 class Client extends API
 {
+
     public Order $order;
 
     /**
@@ -15,7 +16,7 @@ class Client extends API
     {
         $this->order = $order;
 
-        if ( ! isset($order->id)) {
+        if (empty($order->id)) {
             try {
                 $this->order->id = $this->configuration->orderIdGenerator->getNewID();
             } catch (Exception $e) {
@@ -23,19 +24,40 @@ class Client extends API
             }
         }
 
-        $text = $this->post('/v1/CreatePayment', [
+        $array = $this->post('/v1/CreatePayment', [
             "amount" => $order->amount, "orderId" => $order->id
         ]);
 
-        return Payment::parse($order, json_decode($text, true));
+        return Payment::parse($order, $array);
     }
+
 
     public function getRedirectUrlForPayment(Payment $payment): string
     {
-        return $this->configuration->gatewayBase."Payment/Redirect?token=$payment->token";
+        return $this->configuration->gatewayBase."/Payment/Redirect?token=$payment->token";
     }
 
-    public function redirectToPayment(Payment $payment)
+    /**
+     * @param  Order  $order
+     *
+     * @return string
+     * @throws APIException
+     * @throws ClientException
+     * @throws PaymentException
+     */
+    public function getRedirectUrlForOrder(Order $order): string
+    {
+        $payment = $this->createPayment($order);
+
+        return $this->getRedirectUrlForPayment($payment);
+    }
+
+    /**
+     * @param  Payment  $payment
+     *
+     * @return void
+     */
+    public function redirectToPayment(Payment $payment): void
     {
         header('Location: '.$this->getRedirectUrlForPayment($payment));
     }
@@ -62,11 +84,11 @@ class Client extends API
     public function getPaymentByOrderId(string|Order $orderOrId): PaymentFoundResponse
     {
 
-        $text = $this->post('/v1/RetrieveOrderPayment', [
+        $array = $this->post('/v1/RetrieveOrderPayment', [
             "orderId" => is_string($orderOrId) ? $orderOrId : $orderOrId->id
         ]);
 
-        return PaymentFoundResponse::parse(json_decode($text, true));
+        return PaymentFoundResponse::parse($array);
 
     }
 
@@ -75,11 +97,11 @@ class Client extends API
      */
     public function getPaymentByTransactionId(string $id): PaymentFoundResponse
     {
-        $text = $this->post('/v1/RetrieveOrderPayment', [
+        $array = $this->post('/v1/RetrieveOrderPayment', [
             "orderId" => $id
         ]);
 
-        return PaymentFoundResponse::parse(json_decode($text, true));
+        return PaymentFoundResponse::parse($array);
     }
 
     /**

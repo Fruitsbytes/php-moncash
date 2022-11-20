@@ -3,7 +3,7 @@
 namespace Fruitsbytes\PHP\MonCash\Strategy\SecretManager;
 
 use Dotenv\Dotenv;
-use Dotenv\Exception\InvalidPathException;
+use Exception;
 use Fruitsbytes\PHP\MonCash\Strategy\StrategyException;
 
 /**
@@ -11,23 +11,25 @@ use Fruitsbytes\PHP\MonCash\Strategy\StrategyException;
  */
 class DefaultSecretManager implements SecretManagerInterface
 {
+
+    const DEFAULT_ENV_PATH = '../../';
     /**
      * @param  string|null  $path  path to the `.env` file
      *
      * @inheritdoc
      * @throws StrategyException
      */
-    public function __construct(null|string $path = null)
+    public function __construct(string $path = self::DEFAULT_ENV_PATH)
     {
         $this->check($path);
     }
 
     /**
-     * @param  string|null  $path  path to the `.env` file
+     * @param  string  $path  path to the `.env` file
      *
      * @inheritdoc
      */
-    public function check(null|string $path = __DIR__.'/../src/'): bool
+    public function check(string $path = self::DEFAULT_ENV_PATH): bool
     {
 
         if (class_exists('Dotenv\Dotenv') === false) {
@@ -37,7 +39,7 @@ class DefaultSecretManager implements SecretManagerInterface
         try {
             $dotenv = Dotenv::createImmutable($path);
             $dotenv->load();
-        } catch (InvalidPathException $e) {
+        } catch (Exception $e) {
             throw new SecretManagerException("Could not load .env file from path [$path]", 0, $e);
         }
 

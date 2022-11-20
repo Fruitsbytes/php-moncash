@@ -24,24 +24,6 @@ PHP library
 [![PHP Version Require](http://poser.pugx.org/fruitsbytes/php-moncash/require/php)](https://packagist.org/packages/fruitsbytes/php-moncash)
 [![Version](http://poser.pugx.org/fruitsbytes/php-moncash/version)](https://packagist.org/packages/fruitsbytes/php-moncash)
 
-<p>
-<small> <b>*</b> The Digicel&trade;, MonCash&trade;, Sogebank&trade; and all other trademarks, logos and brand names are the property
-of their respective owners. All company, product and service names used in this documentation are for identification purposes
-only. Use of these names,trademarks and brands does not imply endorsement. </small>
-</p>
-
-<p>
-<small>
-<a href="https://www.digicelgroup.com/ht/en/moncash/business.html" target="_blank">MonCash&trade;</a>
- is a mobile money service provided by 
-<a href="https://www.digicelgroup.com/" target="_blank">Digicel&trade;</a> 
-that allows daily transactions between MonCash users, regardless of their location in Haiti. 
-Digicel is a pioneer in mobile money. Their financial services  are currently expanding into other markets, specifically in the pacific island with MyCash&trade;
-[<a target="_blank" href="https://mycash.com.fj/" >1</a>] [<a target="_blank" href="https://mycash.ws/" >2</a>] 
-</small>
-</p>
-
-
 A library to facilitate Digicel MonCash mobile money integration on your PHP projects via
 their [API](https://sandbox.moncashbutton.digicelgroup.com/Moncash-business/resources/doc/RestAPI_MonCash_doc.pdf). For
 now it
@@ -115,9 +97,7 @@ composer install
 
 ## [Prerequiste](#prerequisite)
 
-In order to interact with the Digicel's API, you need to the credentials for your buisiness application. You can scope
-your business operations with multiple sets of credentials. For example you can have on set for websites and another one
-for mobile apps with different redirection urls. This can be very useful to manage `deep links`,
+In order to interact with the Digicel's API, you need to the credentials for your buisiness application.
 
 To create and manage your credentials:
 
@@ -138,8 +118,6 @@ To create and manage your credentials:
 ---
 
 ## [Quick Start](Quick Start)
-
-After retrieving the credentials ab installing the package you are ready to start using it.
 
 You can setup a .env file in the root of your project to automatically configure the client:
 
@@ -203,7 +181,8 @@ For client facing websites and mobile app, where the client iniates the payment.
 ```php
 // Create a payment & redirect user
 use Fruitsbytes\PHP\MonCash\API\Order;
-use Fruitsbytes\PHP\MonCash\APIException;
+use Fruitsbytes\PHP\MonCash\API\PaymentFoundResponse;
+use Fruitsbytes\PHP\MonCash\API\PaymentFoundResponse;use Fruitsbytes\PHP\MonCash\APIException;
 use Exception;
 
 try{
@@ -217,10 +196,22 @@ catch( Exception $e){
 }
 
 // get payment by orderID if ypui do not habe the transation ID yet
+/**
+* @var PaymentFoundResponse
+ */
 $payment = $client->getPaymentByOrderId($order->id);
 
 // get payment by transactionID when transaction is finished
-$payment = $client->getPaymentByTransactionId($transactionID);
+$transactionId = $_GET['transactionId']
+
+/**
+* @var PaymentFoundResponse
+ */
+$payment = $client->getPaymentByTransactionId($transactionId);
+
+if(!$payment->isSuccessful()){
+  throw new \Exception($payment->message);
+}
 
 
 
@@ -232,29 +223,31 @@ The button, when clicked, will create the transaction and redirects the user to 
 
 ```php
 // Generate Button form html code
-use Fruitsbytes\PHP\MonCash\Button\Button;
+use Fruitsbytes\PHP\MonCash\Button\ButtonStyleRedResponsive;
 
-$buttonConfig= [
-    "height" => 48,
-    "border" => false,
-    "animation" => true 
+$buttonConfig = [
+     true, // border
+     'em', //  lang
+     true, // animate on  hover,
+     48 // height
 ];
-$button = new Button( $order, $clientConfig, $buttonConfig);
+$button = new ButtonStyleRedResponsive( $order, $clientConfig, ...$buttonConfig);
 
 $htmlButton = $button->html();
 print($htmlButton);
 
-// or Use the Stringable interface
-print($button);
+// or Use the \Stringable interface
+print $button;
 
-// Output Button form in the current page context
-$buttonEN = $api->button( $oderId, $amount, 'en');
+
 ```
 
 You can render the template directly
 
 ```php
-<?php $buttonEN->render(); ?>
+$buttonHT = $button( $order, [], true, 'ht');
+
+$buttonHT->render();
 ```
 
 <div align="center">
@@ -277,9 +270,9 @@ For a complete guide please check the [documentation](./docs/en/ABOUT.md) or the
 
 ## [Playground](#playground)
 
-You can check the Postman API [online]() or [import](./Postman) the .json from this repository.
+==== 🚧 Website Coming soon =====
 
-You can also test your credentials on the OpenAPI 3.1 [documentation](#).
+You can check the Postman API [online]() or [import](./Postman) the .json from this repository.
 
 ## [TODO](#todo)
 
@@ -378,7 +371,26 @@ soon as possible. You may view our full security policy [here](./SECURITY.md).
 
 ## [⚖ License](#license)
 
-this library is licensed under [The MIT License](LICENSE).
+This library is licensed under [The MIT License](LICENSE).
+
+### Discalimer
+
+<p>
+<small> <b>*</b> The Digicel&trade;, MonCash&trade;, Sogebank&trade; and all other trademarks, logos and brand names are the property
+of their respective owners. All company, product and service names used in this documentation are for identification purposes
+only. Use of these names,trademarks and brands does not imply endorsement. </small>
+</p>
+
+<p>
+<small>
+<a href="https://www.digicelgroup.com/ht/en/moncash/business.html" target="_blank">MonCash&trade;</a>
+ is a mobile money service provided by 
+<a href="https://www.digicelgroup.com/" target="_blank">Digicel&trade;</a> 
+that allows daily transactions between MonCash users, regardless of their location in Haiti. 
+Digicel is a pioneer in mobile money. Their financial services  are currently expanding into other markets, specifically in the pacific island with MyCash&trade;
+[<a target="_blank" href="https://mycash.com.fj/" >1</a>] [<a target="_blank" href="https://mycash.ws/" >2</a>] 
+</small>
+</p>
 
 ## [ 🛟 Need help?](#help)
 
@@ -409,5 +421,7 @@ You can also check our <a href="https://www.youtube.com/channel/UC14dR51q2_mFCQu
 risk, and improve code health, while paying the maintainers of the exact dependencies you use.
 
 Contact us at [business@anbapyezanman.com](mailto:business@anbapyezanman.com)
+
+
 
 

@@ -47,7 +47,7 @@ class Retry
         } while ($failures < $this->attempts && $succeeded !== true);
 
         if ($succeeded !== true) {
-            throw new APIException('Max number of attempts  exceeded for this call', 0, $exception);
+            throw new APIException('Max number of attempts  exceeded for this call. ' .$failures, 0, $exception);
         }
     }
 

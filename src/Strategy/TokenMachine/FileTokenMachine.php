@@ -58,25 +58,33 @@ class FileTokenMachine implements TokenMachineInterface
     /** @inheritdoc */
     public function getToken(bool $new = false): string|bool
     {
-        if($new){
+        if ($new) {
             return false;
         }
 
 
-        $fz       = sys_get_temp_dir().'/';
-        $filename = sys_get_temp_dir().self::FILE_NAME;
+        try {
+            $fz       = sys_get_temp_dir().'/';
+            $filename = sys_get_temp_dir().self::FILE_NAME;
 
-        if ($this->isTokenExpired($filename)) {
+            if (file_exists($filename)) {
+
+                if ($this->isTokenExpired($filename)) {
+                    return false;
+                }
+
+                $file = fopen($filename, "r");
+
+                $token = $this->decrypt(fread($file, filesize($fz)));
+                fclose($file);
+
+                return $token ?? false;
+            } else {
+                return false;
+            }
+        } catch (Exception) {
             return false;
         }
-
-        $file = fopen($filename, "r");
-
-
-        $token = $this->decrypt(fread($file, filesize($fz)));
-        fclose($file);
-
-        return $token ??  false;
     }
 
 

@@ -10,10 +10,10 @@ class Order
     public float $amount;
 
     /**
-     * @param  string  $id
      * @param  float  $amount  the price will be rounded up since the API only accepts integers
+     * @param  string|null  $id
      */
-    public function __construct(public string $id, float $amount)
+    public function __construct(float $amount, public ?string $id = '')
     {
         $this->amount = ceil($amount);
     }

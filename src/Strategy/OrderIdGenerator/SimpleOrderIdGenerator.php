@@ -31,7 +31,7 @@ class SimpleOrderIdGenerator implements OrderIdGeneratorInterface
      * @param  bool $thorough Add extensive test that may be memory intensive.
      * @inheritDoc
      */
-    public function check( bool|null $thorough = false): bool
+    public function check( bool $thorough = false): bool
     {
 
         /**
@@ -160,7 +160,7 @@ class SimpleOrderIdGenerator implements OrderIdGeneratorInterface
      *
      * @return string
      */
-    protected static function nameToPath(string $name): string
+    public static function nameToPath(string $name): string
     {
         $tempDir = sys_get_temp_dir();
 

@@ -1,0 +1,147 @@
+html, body {
+    background: #171717;
+    color: #dedede;
+    font-family: sans-serif;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+
+p {
+    text-align: center;
+    color: #383838;
+}
+
+.qr-holder {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    background: #242424;
+    box-shadow: 0 0 18px rgb(10 10 10 / 86%);
+    border-radius: 6px;
+    border: 1px solid #303030;
+    width: 600px;
+    margin: 24px auto;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+
+.product-img {
+    height: 400px;
+    width: 200px;
+    background-image: url("./img.jpg");
+    background-size: cover;
+    background-position: center;
+}
+
+
+
+.description {
+    height: 48px;
+    grid-column: 1 / span 3;
+    background: #161616;
+    margin: 0 -1px -1px;
+    border: 1px solid #262628;
+    border-radius: 0 0 6px 6px;
+    align-items: center;
+    padding: 0 12px;
+    display: flex;
+    color: #4b4f52;
+    justify-content: space-between;
+    box-shadow: 0 1px 10px inset #000;
+    text-shadow: 0 0 5px #000;
+}
+
+#qr {
+    grid-column: 2 / span 2;
+    grid-row: 1 / span 2;
+    height: 400px;
+    width: 400px;
+}
+
+.qr-holder:hover {
+    transform: scale(1.01);
+    box-shadow: 2px 2px 24px rgb(26 26 26 / 100%);
+}
+
+footer {
+    margin-top: auto;
+    background: #141414;
+    color: #424242;
+    display: flex;
+    height: 72px;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+}
+
+.price {
+    font-family: monospace;
+    color: aquamarine;
+}
+
+.menu {
+    position: absolute;
+    right: 24px;
+    top: 12px;
+    color: #4d4d4d;
+    display: flex;
+    flex-direction: column;
+}
+
+.menu svg {
+    width: 36px;
+    height: 36px;
+    transition: .5s ease-in;
+    margin: 6px;
+}
+
+.menu svg:hover {
+    color: #0066ff;
+    transform: rotate(45deg);
+}
+
+
+.error {
+    padding: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    background: #ab2020;
+    color: #faeeec;
+    text-align: left;
+    border-radius: 6px;
+    margin-top: 48px;
+}
+
+a {
+    color: #3f3f3f;
+}
+
+.url {
+    font-size: 12px;
+    max-width: 437px;
+    overflow-wrap: break-word;
+    line-height: 1;
+    margin: auto;
+    padding: 12px 24px;
+    color: #535356;
+    border: 1px solid #202020;
+    border-radius: 6px;
+    background: #080808;
+}
+
+#timer {
+    font-family: monospace;
+    color: #db6c6c;
+    font-size: 16px;
+    padding: 2px 4px;
+    background: #0a1e00;
+    border-radius: 6px;
+}

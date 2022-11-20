@@ -60,29 +60,29 @@ class Configuration extends ArrayObject implements Stringable
         'SecretManager'    => [
             "exceptionClass" => SecretManagerException::class,
             "default"        => DefaultSecretManager::class,
-            "interface"      => "Fruitsbytes\\PHP\\MonCash\\Strategy\\OrderIdGenerator\\OrderIdGeneratorInterface",
-            "nameSpace"      => "Fruitsbytes\\PHP\\MonCash\\Strategy\\OrderIdGenerator",
+            "interface"      => "Fruitsbytes\\PHP\\MonCash\\Strategy\\SecretManager\\SecretManagerInterface",
+            "namespace"      => "Fruitsbytes\\PHP\\MonCash\\Strategy\\SecretManager",
             "propertyName"   => 'secretManager'
         ],
-        'TokenMachine'     => [
+        'ToKenMachine'     => [
             "exceptionClass" => TokenMachineException::class,
             "default"        => FileTokenMachine::class,
             "interface"      => "Fruitsbytes\\PHP\\MonCash\\Strategy\\TokenMachine\\TokenMachineInterface",
-            "nameSpace"      => "Fruitsbytes\\PHP\\MonCash\\Strategy\\TokenMachine",
+            "namespace"      => "Fruitsbytes\\PHP\\MonCash\\Strategy\\TokenMachine",
             "propertyName"   => 'tokenMachine'
         ],
         'OrderIdGenerator' => [
             "exceptionClass" => OrderIdGeneratorException::class,
             "default"        => UUIDOrderIdGenerator::class,
             "interface"      => "Fruitsbytes\\PHP\\MonCash\\Strategy\\OrderIdGenerator\\OrderIdGeneratorInterface",
-            "nameSpace"      => "Fruitsbytes\\PHP\\MonCash\\Strategy\\OrderIdGenerator",
+            "namespace"      => "Fruitsbytes\\PHP\\MonCash\\Strategy\\OrderIdGenerator",
             "propertyName"   => 'orderIdGenerator'
         ],
         'PhoneValidation'  => [
             "exceptionClass" => PhoneValidationException::class,
             "default"        => DefaultHaitianPhoneValidation::class,
             "interface"      => "Fruitsbytes\\PHP\\MonCash\\Strategy\\PhoneValidation\\PhoneValidationInterface",
-            "nameSpace"      => "Fruitsbytes\\PHP\\MonCash\\Strategy\\PhoneValidation",
+            "namespace"      => "Fruitsbytes\\PHP\\MonCash\\Strategy\\PhoneValidation",
             "propertyName"   => 'phoneValidation'
         ],
     ];
@@ -261,7 +261,6 @@ class Configuration extends ArrayObject implements Stringable
     }
 
     /**
-     * @param  bool  $reload  ⚠ If true it will overwrite the Host Variables with the value in the `.env` file
      * @param  string  $path  The path to the .env file
      *
      * @return  array{
@@ -274,24 +273,23 @@ class Configuration extends ArrayObject implements Stringable
      * }
      * @throws ConfigurationException
      */
-    private static function getHostConfiguration(bool $reload = false, string $path = __DIR__.'/../src/'): array
+    private static function getHostConfiguration(string $path = '../../'): array
     {
-        if ($reload) {
-            self::loadHostConfig($path);
-        }
+
+        self::loadHostConfig($path);
 
         return [
-            'mode'             => $_ENV['MONCASH_MODE'],
-            'lang'             => $_ENV['MONCASH_LANG'],
-            'clientSecret'     => $_ENV['MONCASH_CLIENT_SECRET'],
-            'clientId'         => $_ENV['MONCASH_CLIENT_ID'],
-            'businessKey'      => $_ENV['MONCASH_BUSINESS_KEY'],
-            'rsaPath'          => $_ENV['MONCASH_RSA_KEY_PATH'],
-            'timeout'          => $_ENV['MONCASH_TIMEOUT'],
-            'secretManager'    => $_ENV['MONCASH_SECRET_MANAGER'],
-            'tokenMachine'     => $_ENV['MONCASH_TOKEN_MACHINE'],
-            'phoneValidation'  => $_ENV['MONCASH_PHONE_VALIDATION'],
-            'orderIdGenerator' => $_ENV['MONCASH_IDEMPOTENCE_MAKER'],
+            'mode'             => $_ENV['MONCASH_MODE'] ?? self::DEFAULT_CONFIG['mode'],
+            'lang'             => $_ENV['MONCASH_LANG'] ?? self::DEFAULT_CONFIG['lang'],
+            'clientSecret'     => $_ENV['MONCASH_CLIENT_SECRET'] ?? self::DEFAULT_CONFIG['clientSecret'],
+            'clientId'         => $_ENV['MONCASH_CLIENT_ID'] ?? self::DEFAULT_CONFIG['clientId'],
+            'businessKey'      => $_ENV['MONCASH_BUSINESS_KEY'] ?? self::DEFAULT_CONFIG['businessKey'],
+            'rsaPath'          => $_ENV['MONCASH_RSA_KEY_PATH'] ?? self::DEFAULT_CONFIG ['rsaPath'],
+            'timeout'          => $_ENV['MONCASH_TIMEOUT'] ?? self::DEFAULT_CONFIG ['timeout'],
+            'secretManager'    => $_ENV['MONCASH_SECRET_MANAGER'] ?? self::DEFAULT_CONFIG['secretManager'],
+            'tokenMachine'     => $_ENV['MONCASH_TOKEN_MACHINE'] ?? self::DEFAULT_CONFIG['tokenMachine'],
+            'phoneValidation'  => $_ENV['MONCASH_PHONE_VALIDATION'] ?? self::DEFAULT_CONFIG['phoneValidation'],
+            'orderIdGenerator' => $_ENV['MONCASH_ORDER_ID_GENERATOR'] ?? self::DEFAULT_CONFIG['orderIdGenerator'],
         ];
     }
 
@@ -317,12 +315,12 @@ class Configuration extends ArrayObject implements Stringable
     }
 
     /**
-     * @param  string|SecretManager|null  $manager
+     * @param  string|SecretManager  $manager
      *
      * @return void
      * @throws SecretManagerException|StrategyException
      */
-    private function setSecretManager(string|SecretManager|null $manager = null): void
+    private function setSecretManager(string|SecretManager $manager = self::DEFAULT_CONFIG['secretManager']): void
     {
         $this->setStrategy($manager, 'SecretManager');
     }
@@ -331,7 +329,7 @@ class Configuration extends ArrayObject implements Stringable
     /**
      * @throws StrategyException|TokenMachineException
      */
-    private function setToKenMachine(string|ToKenMachine|null $tokenMachine = null)
+    private function setToKenMachine(string|ToKenMachine $tokenMachine = self::DEFAULT_CONFIG['tokenMachine'])
     {
         $this->setStrategy($tokenMachine, 'ToKenMachine');
     }
@@ -339,16 +337,18 @@ class Configuration extends ArrayObject implements Stringable
     /**
      * @throws StrategyException|PhoneValidationException
      */
-    private function setPhoneValidation(string|PhoneValidation|null $phoneValidation = null)
-    {
+    private function setPhoneValidation(
+        string|PhoneValidation $phoneValidation = self::DEFAULT_CONFIG['phoneValidation']
+    ) {
         $this->setStrategy($phoneValidation, 'PhoneValidation');
     }
 
     /**
      * @throws StrategyException|OrderIdGeneratorException
      */
-    public function setOrderIdGenerator(string|OrderIdGenerator|null $orderIdGenerator = null)
-    {
+    public function setOrderIdGenerator(
+        string|OrderIdGenerator $orderIdGenerator = self::DEFAULT_CONFIG['orderIdGenerator']
+    ) {
         $this->setStrategy($orderIdGenerator, 'OrderIdGenerator');
     }
 
@@ -392,24 +392,26 @@ class Configuration extends ArrayObject implements Stringable
 
 
     /**
-     * @param  string|StrategyInterface|null  $strategy
+     * @param  string|StrategyInterface  $strategy
      * @param  string|null  $type
      *
      * @return void
      * @throws StrategyException
      */
-    private function setStrategy(string|StrategyInterface|null $strategy, string|null $type = null): void
+    private function setStrategy(string|StrategyInterface $strategy, string|null $type = null): void
     {
         if (empty($type)) {  // Find Strategy Interface to know where to store it
             $type = self::getStrategyType($strategy);
         }
 
         if (
-            is_subclass_of($type, StrategyInterface::class) === false ||
-            empty($package = self::STRATEGY_PACKAGE[$type])
+            is_subclass_of($strategy, StrategyInterface::class) === false ||
+            empty(self::STRATEGY_PACKAGE[$type])
         ) {
             throw new StrategyException('The provided type does not implement StrategyInterface');
         }
+
+        $package = self::STRATEGY_PACKAGE[$type];
 
         if (is_object($strategy)) {
             $object = $strategy;
@@ -425,16 +427,16 @@ class Configuration extends ArrayObject implements Stringable
             ) {
                 $class = $package['namespace']."\\$strategy";
             } else {
-                throw new $package['exception']('INVALID');
+                throw new $package['exceptionClass']('INVALID 0');
             }
 
             $object = new $class();
 
         } else {
-            throw new $package['exception']('INVALID');
+            throw new $package['exceptionClass']('INVALID 1');
         }
 
-        $this[$package['property']] = $object;
+        $this[$package['propertyName']] = $object;
     }
 
     /**
@@ -489,7 +491,7 @@ class Configuration extends ArrayObject implements Stringable
         $this->lang            = $config['lang'] ?? $this->lang ?? $hostConfig['lang'];
         $this->businessKey     = $config['businessKey'] ??
                                  $this->businessKey ??
-                                 $hostConfig['MONCASH_BUSINESS_KEY'];
+                                 $hostConfig['businessKey'];
         $this->timeout         = $config['timeout'] ?? $this->timeout ?? 60;
         $this->rsaPath         = $config['rsaPath'] ?? $this->rsaPath ?? $hostConfig['rsaPath'];
         $this->gatewayBase     = self::GATEWAY_BASE[$this->mode];
@@ -497,10 +499,18 @@ class Configuration extends ArrayObject implements Stringable
         $this->restApi         = self::HOST_REST_API[$this->mode];
 
         try {
-            $this->setSecretManager($config['secretManager'] ?? $this->secretManager ?? null);
-            $this->setToKenMachine($config['tokenMachine'] ?? $this->tokenMachine ?? null);
-            $this->setPhoneValidation($config['phoneValidation'] ?? $this->phoneValidation ?? null);
-            $this->setOrderIdGenerator($config['orderIdGenerator'] ?? $this->orderIdGenerator ?? null);
+            $this->setSecretManager(
+                $config['secretManager'] ?? $this->secretManager ?? self::DEFAULT_CONFIG['secretManager']
+            );
+            $this->setToKenMachine(
+                $config['tokenMachine'] ?? $this->tokenMachine ?? self::DEFAULT_CONFIG['tokenMachine']
+            );
+            $this->setPhoneValidation(
+                $config['phoneValidation'] ?? $this->phoneValidation ?? self::DEFAULT_CONFIG['phoneValidation']
+            );
+            $this->setOrderIdGenerator(
+                $config['orderIdGenerator'] ?? $this->orderIdGenerator ?? self::DEFAULT_CONFIG['orderIdGenerator']
+            );
         } catch (StrategyException $e) {
             throw new ConfigurationException('FAILED_TO_SET_STRATEGY', 0, $e);
         }
@@ -542,12 +552,10 @@ class Configuration extends ArrayObject implements Stringable
      *
      * @inheritdoc
      */
-    public function __toString(bool $secure = true): string
+    public function __toString(): string
     {
-        $arr = $this->array;
-        if ($secure) {
-            $arr['clientSecret'] = "******************";
-        }
+        $arr                 = $this->array;
+        $arr['clientSecret'] = "******************";
 
         return json_encode($arr);
     }

@@ -40,9 +40,12 @@ class Payment
      */
     private function setExpirationDate(): int
     {
-        $interval = abs(strtotime($this->creation) - strtotime($this->expiration));
 
-        $this->expirationDate = new DateTime(strtotime("+{$interval} second"));
+        $interval = DateTime::createFromFormat('Y-m-d H:i:s:v',
+                $this->expiration)->getTimestamp() - DateTime::createFromFormat('Y-m-d H:i:s:v',
+                $this->creation)->getTimestamp();
+
+        $this->expirationDate = new DateTime('+'.$interval.' seconds');
 
         return $interval;
     }

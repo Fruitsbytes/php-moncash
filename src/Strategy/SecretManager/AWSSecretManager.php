@@ -8,7 +8,7 @@ namespace Fruitsbytes\PHP\MonCash\Strategy\SecretManager;
 class AWSSecretManager implements SecretManagerInterface
 {
     /**@inheritdoc */
-    function check(): bool|SecretManagerException
+    function check(): bool
     {
         // TODO: Implement check() method.
         return  false;
@@ -22,4 +22,7 @@ class AWSSecretManager implements SecretManagerInterface
     }
 
 
+    public function __construct()
+    {
+    }
 }

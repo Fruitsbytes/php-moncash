@@ -16,7 +16,7 @@ class UUIDOrderIdGenerator extends SimpleOrderIdGenerator implements OrderIdGene
     /**
      * @inheritDoc
      */
-    public function check(bool|null $thorough = false): bool
+    public function check(bool $thorough = false): bool
     {
 
         /**
@@ -60,7 +60,7 @@ class UUIDOrderIdGenerator extends SimpleOrderIdGenerator implements OrderIdGene
             $retry = new Retry(function () use ($verifyLocally, $log, &$id) {
                 $found = (string) Uuid::uuid4();
 
-                $path = self::nameToPath($found);
+                $path = UUIDOrderIdGenerator::nameToPath($found);
 
                 if ($verifyLocally && file_exists($path)) {
                     throw new OrderIdGeneratorException('ID already used.');
@@ -70,6 +70,8 @@ class UUIDOrderIdGenerator extends SimpleOrderIdGenerator implements OrderIdGene
                 }
 
                 $id = $found;
+
+                return true;
             });
 
             $retry->call();

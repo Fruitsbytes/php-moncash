@@ -2,6 +2,8 @@
 
 PHP library
 
+
+
 [en]: ./README.md "English translation"
 
 [fr]: ./README.fr.md "Traduction française"
@@ -17,13 +19,33 @@ PHP library
 
 <img  src="./FruitsBytes-moncash-php.png?v=2" alt="FruitsBytes-Moncash-PHP">
 
+</p>
 
-[![Latest Stable Version](http://poser.pugx.org/fruitsbytes/php-moncash/v)](https://packagist.org/packages/fruitsbytes/php-moncash)
-[![Total Downloads](http://poser.pugx.org/fruitsbytes/php-moncash/downloads)](https://packagist.org/packages/fruitsbytes/php-moncash)
-[![Latest Unstable Version](http://poser.pugx.org/fruitsbytes/php-moncash/v/unstable)](https://packagist.org/packages/fruitsbytes/php-moncash)
-[![License](http://poser.pugx.org/fruitsbytes/php-moncash/license)](https://packagist.org/packages/fruitsbytes/php-moncash)
-[![PHP Version Require](http://poser.pugx.org/fruitsbytes/php-moncash/require/php)](https://packagist.org/packages/fruitsbytes/php-moncash)
-[![Version](http://poser.pugx.org/fruitsbytes/php-moncash/version)](https://packagist.org/packages/fruitsbytes/php-moncash)
+<p align="center">
+
+<img src="https://img.shields.io/badge/Composer-161B30?style=for-the-badge&logo=Composer&logoColor=b3b3b3" />
+<img src="https://img.shields.io/badge/JWT-161B30?style=for-the-badge&logo=JSON%20web%20tokens&logoColor=b3b3b3" />
+<img src="https://img.shields.io/badge/Postman-161B30?style=for-the-badge&logo=Postman&logoColor=b3b3b3" />
+<img src="http://img.shields.io/badge/-PHPStorm-161B30?style=for-the-badge&logo=phpstorm&logoColor=b3b3b3" />
+<img src="https://img.shields.io/badge/HTML5-161B30?style=for-the-badge&logo=html5&logoColor=b3b3b3" />
+<img src="https://img.shields.io/badge/PHP-161B30?style=for-the-badge&logo=php&logoColor=b3b3b3" />
+
+</p>
+
+<p align="center">
+
+<img src="https://badgen.net/packagist/name/Fruitsbytes/php-moncash"/>
+
+<img src="https://badgen.net/packagist/v/Fruitsbytes/php-moncash/latest"/>
+<img src="https://badgen.net/packagist/dt/Fruitsbytes/php-moncash"/>
+<img src="https://badgen.net/github/checks/Fruitsbytes/php-moncash"/>
+<img src="https://badgen.net/packagist/php/Fruitsbytes/php-moncash"/>
+<img src="https://badgen.net/github/license/Fruitsbytes/php-moncash"/>
+
+
+</p>
+
+
 
 A library to facilitate Digicel MonCash mobile money integration on your PHP projects via
 their [API](https://sandbox.moncashbutton.digicelgroup.com/Moncash-business/resources/doc/RestAPI_MonCash_doc.pdf). For

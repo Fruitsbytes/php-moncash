@@ -71,7 +71,8 @@ try {
 <body>
 <div style="max-width: 800px; margin: 12px auto">
 
-    <h1 style="font-weight: 100; color: #737373;">MonCash Button</h1>
+    <h1 style="font-weight: 100; color: #737373;">MonCash</h1>
+    <div>Button Style.</div>
     <form action="">
         <div>
             <label for="height">Height</label>

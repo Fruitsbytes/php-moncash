@@ -346,7 +346,7 @@ class Configuration extends ArrayObject implements Stringable
     /**
      * @throws StrategyException|OrderIdGeneratorException
      */
-    public function setOrderIdGenerator(
+    private function setOrderIdGenerator(
         string|OrderIdGenerator $orderIdGenerator = self::DEFAULT_CONFIG['orderIdGenerator']
     ) {
         $this->setStrategy($orderIdGenerator, 'OrderIdGenerator');
@@ -358,7 +358,7 @@ class Configuration extends ArrayObject implements Stringable
      * @return string
      * @throws StrategyException
      */
-    public static function getStrategyType(mixed $strategy): string
+    private static function getStrategyType(mixed $strategy): string
     {
 
         if ((empty($strategy)) || is_subclass_of($strategy, StrategyInterface::class) === false) {

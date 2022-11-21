@@ -1,8 +1,15 @@
 # Moncash
 
-PHP library
+<p>
 
+<img src="https://img.shields.io/badge/PHP-4f5b93?style=for-the-badge&logo=php&logoColor=7a86b8" alt="PHP" />
+<img src="https://img.shields.io/badge/Composer-161B30?style=for-the-badge&logo=Composer&logoColor=b3b3b3" />
+<img src="https://img.shields.io/badge/JWT-161B30?style=for-the-badge&logo=JSON%20web%20tokens&logoColor=b3b3b3" />
+<img src="https://img.shields.io/badge/Postman-161B30?style=for-the-badge&logo=Postman&logoColor=b3b3b3" />
+<img src="http://img.shields.io/badge/-PHPStorm-161B30?style=for-the-badge&logo=phpstorm&logoColor=b3b3b3" />
+<img src="https://img.shields.io/badge/HTML5-161B30?style=for-the-badge&logo=html5&logoColor=b3b3b3" />
 
+</p>
 
 [en]: ./README.md "English translation"
 
@@ -17,18 +24,7 @@ PHP library
 
 <p align="center">
 
-<img  src="./FruitsBytes-moncash-php.png?v=2" alt="FruitsBytes-Moncash-PHP">
-
-</p>
-
-<p align="center">
-
-<img src="https://img.shields.io/badge/Composer-161B30?style=for-the-badge&logo=Composer&logoColor=b3b3b3" />
-<img src="https://img.shields.io/badge/JWT-161B30?style=for-the-badge&logo=JSON%20web%20tokens&logoColor=b3b3b3" />
-<img src="https://img.shields.io/badge/Postman-161B30?style=for-the-badge&logo=Postman&logoColor=b3b3b3" />
-<img src="http://img.shields.io/badge/-PHPStorm-161B30?style=for-the-badge&logo=phpstorm&logoColor=b3b3b3" />
-<img src="https://img.shields.io/badge/HTML5-161B30?style=for-the-badge&logo=html5&logoColor=b3b3b3" />
-<img src="https://img.shields.io/badge/PHP-161B30?style=for-the-badge&logo=php&logoColor=b3b3b3" />
+<img  src="assets/images/FruitsBytes-moncash-php.png?v=2" alt="FruitsBytes-Moncash-PHP">
 
 </p>
 
@@ -56,10 +52,12 @@ is part of the MonCash SDK provided by FruitsBytes.
 
 ------------
 
-## [Features](#features)
+## [🍇Features](#features)
 
-- [x] Client side Adapter (Payment, Transfer, ...)
-    - Render Button
+- [ ] Client side Adapter (Payment, Transfer, ...)
+    - [x] Render Button
+    - [x] Payment
+    - [ ] Transfer
 - [x] Traffic optimisation (`Advanced`)
 - [x] Security: Secret Management (`Advanced`)
 - [x] Unique orderID generator
@@ -78,70 +76,20 @@ is part of the MonCash SDK provided by FruitsBytes.
 
 ------------
 
-## [Installation](#installation)
+## [🍈Documentation](#Documentation)
 
-The preferred way to install this extension with all it's dependencies, is
-through [composer](http://getcomposer.org/download/).
+For a complete guide please check the [Wiki](https://github.com/Fruitsbytes/php-moncash/wiki) or the [code examples](./demo).
 
-### Shell
 
-You can run the installation composer command from the root of your project:
+## [🍉Quick Start](Quick Start)
+
+### Installation
 
 ```shell
 composer require fruitsbytes/php-moncash
 ```
 
-alternatively :
-
-```shell
-php composer.phar require --prefer-dist fruitsbytes/php-moncash "*"
-```
-
-### Config file
-
-or update your `composer.json` and add the package in the `require` section:
-
-```json
-{
-  "require": {
-    "fruitsbytes/php-moncash": "*"
-  }
-}
-
-```
-
-Run the installation command
-
-```shell
-composer install
-```
-
-------------
-
-## [Prerequiste](#prerequisite)
-
-In order to interact with the Digicel's API, you need to the credentials for your buisiness application.
-
-To create and manage your credentials:
-
-1) Go to the Moncah portal [test](https://sandbox.moncashbutton.digicelgroup.com/Moncash-business/)
-   or [live](https://moncashbutton.digicelgroup.com/Moncash-business/)
-2) Select your business or add a new one (Note the congratulation and return URL for `deep links` and web integration)
-3) Retrieve the `clientID` and `clientSecret` to interact with the API
-4) Retrieve the `BusinessKey`
-
-> 💥 <small>IMPORTANT security note:</small>
-> <p><small>Save your business secret in a secure place. Do not share the file containing the secret. Change the secret from time to time.:  </small></p>
-> <ul>
-> <li><small>exclude `.env` from Git commits  </small></li>
-> <li><small>Use a third party Secret manager /Vault to store the secret, example: GCP Secret Manager</small></li>
-> </ul>
->
-
----
-
-## [Quick Start](Quick Start)
-
+### Environment variables & configuration
 You can setup a .env file in the root of your project to automatically configure the client:
 
 ```shell
@@ -205,7 +153,8 @@ For client facing websites and mobile app, where the client iniates the payment.
 // Create a payment & redirect user
 use Fruitsbytes\PHP\MonCash\API\Order;
 use Fruitsbytes\PHP\MonCash\API\PaymentFoundResponse;
-use Fruitsbytes\PHP\MonCash\API\PaymentFoundResponse;use Fruitsbytes\PHP\MonCash\APIException;
+use Fruitsbytes\PHP\MonCash\API\PaymentFoundResponse;
+use Fruitsbytes\PHP\MonCash\APIException;
 use Exception;
 
 try{
@@ -285,49 +234,25 @@ handles Cash-In and Cash-Out scenarios.
 
 ==== 🚧 Coming soon =====
 
-For a complete guide please check the [documentation](./docs/en/ABOUT.md) or the [code examples](./demo).
-
-
-
 -----------
 
-## [Playground](#playground)
+
+
+## [🍊Playground](#playground)
 
 ==== 🚧 Website Coming soon =====
 
 You can check the Postman API [online]() or [import](./Postman) the .json from this repository.
 
-## [TODO](#todo)
 
-- [ ] Version 2.0 migrate to php 8.1 + PhpUnit10 (2023-02-03)
-- [ ] Add additional tests
-- [ ] Add Additional PhpDoc & [PhpStorm Attributes](https://github.com/JetBrains/phpstorm-attributes)
-- [ ] Make a video guide on how to use the library
-- [ ] Implement additional Secret Manager
-- [ ] Implement additional Token Machine
-    - [ ] APC
-    - [ ] Flysystem
-    - [ ] Memcache
-    - [ ] Memcached
-    - [ ] MySQL
-    - [ ] Redis
-- [ ] Implement additional idempotence key maker
-    - [ ] MySQL
-    - [ ] UUID
-- [ ] Add translations
-- [ ] Add demos
-- [ ] Provide Postman collection
-- [ ] Provide OpenApi3.1 Documentation
-- [ ] Upgrade to Async support with PHP Fibers
-- [ ] Make a [Github Page](https://pages.github.com/)
+-----------
 
----
 
-## [Contribution](#contribution)
+## [🍍Contribution](#contribution)
 
 All pull requests and suggestions are welcomed. If there is a particular feature you are struggling make a pull reque
 
-## [Test](#test)
+## [🍒Test](#test)
 
 When modifyiing
 To run the test use the following shell command from this directory.
@@ -348,22 +273,22 @@ vendor\bin\phpunit
 
 ---
 
-## [Other](#Other)
+## [🍓Other](#Other)
 
-#### Other Repositories around this SDK:
+#### FruitsBytes MonCash SDK:
 
-| Repo                                                                       | Description                                                                                                        |                                     Version                                     | Status |
-|----------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------|:-------------------------------------------------------------------------------:|:------:|
-| [Laravel examples](https://github.com/Fruitsbytes/Laravel-Moncash-Example) | Examples using pure laravel codes, no- external libraries.                                                         |                                     v1.1.0                                      |   ✅    |
-| [Laravel]()                                                                | A fully funtional package for laravel                                                                              |              <b>alpha</b> <br/> <small>not ready to share</small>               |   🚧   |
-| [Wordpress](#wordpress)                                                    | Use MonCash on Wordpress sites. Also available for Woocommerce integration                                         |              <b>alpha</b> <br/> <small>not ready to share</small>               |   🚧   |
-| [Shopify](#shopify)                                                        | Use MonCash as a shopify payment method                                                                            |              <b>alpha</b> <br/> <small>not ready to share</small>               |   🚧   |
-| [NodeJS](#nodeJS)                                                          | Using NodeJS as a server this can be used with idependently or as an API (for non-SSR websites for example).       |              <b>alpha</b> <br/> <small>not ready to share</small>               |   🚧   |
-| [Javascript Examples](#javasccript-examples)                               | Repositories with a general idea on how to consume the API with several use case and JS Frameworks native solution |              <b>alpha</b> <br/> <small>not ready to share</small>               |   🚧   |
-| [Angular](#angular)                                                        | Configurable Button + Server side compolnents (Angular Universal)                                                  |              <b>alpha</b> <br/> <small>not ready to share</small>               |   🚧   |
-| [ReactJS](#reactJS)                                                        | Configurable Button                                                                                                |              <b>alpha</b> <br/> <small>not ready to share</small>               |   🚧   |
-| [VueJS](#vueJS)                                                            | Configurable Button                                                                                                |              <b>alpha</b> <br/> <small>not ready to share</small>               |   🚧   |
-| [Capacitor](#capacitor)                                                    | IonicFramework Plugin for Android and IOS with deepLink integration support and extra security                     |              <b>alpha</b> <br/> <small>not ready to share</small>               |   🚧   |
+| Repo                                                                       | Description                                                                                                        |                                      Version                                      | Status |
+|----------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------|:---------------------------------------------------------------------------------:|:------:|
+| [Laravel examples](https://github.com/Fruitsbytes/Laravel-Moncash-Example) | Examples using pure laravel codes, no- external libraries.                                                         | ![version](https://badgen.net/github/release/Fruitsbytes/Laravel-Moncash-Example) |   ✅    |
+| [Laravel]()                                                                | A fully funtional package for laravel                                                                              |               <b>alpha</b> <br/> <small>not ready to share</small>                |   🚧   |
+| [Wordpress](#wordpress)                                                    | Use MonCash on Wordpress sites. Also available for Woocommerce integration                                         |               <b>alpha</b> <br/> <small>not ready to share</small>                |   🚧   |
+| [Shopify](#shopify)                                                        | Use MonCash as a shopify payment method                                                                            |               <b>alpha</b> <br/> <small>not ready to share</small>                |   🚧   |
+| [NodeJS](#nodeJS)                                                          | Using NodeJS as a server this can be used with idependently or as an API (for non-SSR websites for example).       |               <b>alpha</b> <br/> <small>not ready to share</small>                |   🚧   |
+| [Javascript Examples](#javasccript-examples)                               | Repositories with a general idea on how to consume the API with several use case and JS Frameworks native solution |               <b>alpha</b> <br/> <small>not ready to share</small>                |   🚧   |
+| [Angular](#angular)                                                        | Configurable Button + Server side compolnents (Angular Universal)                                                  |               <b>alpha</b> <br/> <small>not ready to share</small>                |   🚧   |
+| [ReactJS](#reactJS)                                                        | Configurable Button + Server side compolnents (Next.js, )                                                          |               <b>alpha</b> <br/> <small>not ready to share</small>                |   🚧   |
+| [VueJS](#vueJS)                                                            | Configurable Button                                                                                                |               <b>alpha</b> <br/> <small>not ready to share</small>                |   🚧   |
+| [Capacitor](#capacitor)                                                    | IonicFramework Plugin for Android and IOS with deepLink integration support and extra security                     |               <b>alpha</b> <br/> <small>not ready to share</small>                |   🚧   |
 
 #### MonCash Documentation
 
@@ -386,39 +311,24 @@ vendor\bin\phpunit
 | Kijan pou mete Moncash sou sit ou pou w vann (🇭🇹)  <br/> ✍ Certil Rémy                                                   | [![Video1](https://img.youtube.com/vi/lE3ejFT11_w/1.jpg)](https://www.youtube.com/watch?v=lE3ejFT11_w) |
 | Comment Intégrer l'onglet Moncash Pay à votre commerce online - Technopro Web (🇫🇷) <br/> ✍  Osirus Kurt, RIP 🕊 | [![Video2](https://img.youtube.com/vi/NiWYrO_E5ik/1.jpg)](https://www.youtube.com/watch?v=NiWYrO_E5ik) |
 
-## [🔐 Security](#security)
+
+--------
+
+
+## [🍋Security](#security)
 
 If you discover a security vulnerability within this package, please send an email
 to [security@anbapyezanman.com](mailto:security@anbapyezanman.com). All security vulnerabilities will be addressed as
 soon as possible. You may view our full security policy [here](./SECURITY.md).
 
-## [⚖ License](#license)
 
-This library is licensed under [The MIT License](LICENSE).
 
-### Discalimer
+--------
 
-<p>
-<small> <b>*</b> The Digicel&trade;, MonCash&trade;, Sogebank&trade; and all other trademarks, logos and brand names are the property
-of their respective owners. All company, product and service names used in this documentation are for identification purposes
-only. Use of these names,trademarks and brands does not imply endorsement. </small>
-</p>
+## [🍎Need help?](#help)
 
-<p>
-<small>
-<a href="https://www.digicelgroup.com/ht/en/moncash/business.html" target="_blank">MonCash&trade;</a>
- is a mobile money service provided by 
-<a href="https://www.digicelgroup.com/" target="_blank">Digicel&trade;</a> 
-that allows daily transactions between MonCash users, regardless of their location in Haiti. 
-Digicel is a pioneer in mobile money. Their financial services  are currently expanding into other markets, specifically in the pacific island with MyCash&trade;
-[<a target="_blank" href="https://mycash.com.fj/" >1</a>] [<a target="_blank" href="https://mycash.ws/" >2</a>] 
-</small>
-</p>
-
-## [ 🛟 Need help?](#help)
-
-Don't hesitate to check the discussion page and check if the issue is not addressed yet. You can start a new discussion
-ineed be.
+Don't hesitate to go in the discussion page and check if the issue is not addressed yet. You can start a new discussion
+if need be.
 
 If you are an upcoming startup, a student or don't have the budget for consultation fees, it will take longer but we can
 submit a public repo illustrating the help you need as long as it will benefit the rest of the community:
@@ -445,6 +355,33 @@ risk, and improve code health, while paying the maintainers of the exact depende
 
 Contact us at [business@anbapyezanman.com](mailto:business@anbapyezanman.com)
 
+
+
+
+--------
+
+## [🍏License](#license)
+
+This library is licensed under [The MIT License](LICENSE).
+
+### Discalimer
+
+<p>
+<small> <b>*</b> The Digicel&trade;, MonCash&trade;, Sogebank&trade; and all other trademarks, logos and brand names are the property
+of their respective owners. All company, product and service names used in this documentation are for identification purposes
+only. Use of these names,trademarks and brands does not imply endorsement. </small>
+</p>
+
+<p>
+<small>
+<a href="https://www.digicelgroup.com/ht/en/moncash/business.html" target="_blank">MonCash&trade;</a>
+ is a mobile money service provided by 
+<a href="https://www.digicelgroup.com/" target="_blank">Digicel&trade;</a> 
+that allows daily transactions between MonCash users, regardless of their location in Haiti. 
+Digicel is a pioneer in mobile money. Their financial services  are currently expanding into other markets, specifically in the pacific island with MyCash&trade;
+[<a target="_blank" href="https://mycash.com.fj/" >1</a>] [<a target="_blank" href="https://mycash.ws/" >2</a>] 
+</small>
+</p>
 
 
 

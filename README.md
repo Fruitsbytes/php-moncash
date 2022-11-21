@@ -81,7 +81,7 @@ is part of the MonCash SDK provided by FruitsBytes.
 For a complete guide please check the [Wiki](https://github.com/Fruitsbytes/php-moncash/wiki) or the [code examples](./demo).
 
 
-## [🍉Quick Start](#Quick Start)
+## [🍉Quick Start](#Quick-Start)
 
 ### Installation
 

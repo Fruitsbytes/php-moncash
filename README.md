@@ -171,7 +171,7 @@ catch( Exception $e){
 /**
 * @var PaymentFoundResponse
  */
-$payment = $client->getPaymentByOrderId($order->id);
+$paymentResult = $client->getPaymentByOrderId($order->id);
 
 // get payment by transactionID when transaction is finished
 $transactionId = $_GET['transactionId']
@@ -179,7 +179,7 @@ $transactionId = $_GET['transactionId']
 /**
 * @var PaymentFoundResponse
  */
-$payment = $client->getPaymentByTransactionId($transactionId);
+$paymentResult = $client->getPaymentByTransactionId($transactionId);
 
 if(!$payment->isSuccessful()){
   throw new \Exception($payment->message);
@@ -217,7 +217,7 @@ print $button;
 You can render the template directly
 
 ```php
-$buttonHT = $button( $order, [], true, 'ht');
+$buttonHT = new ButtonStyleRedResponsive( $order, [], true, 'ht');
 
 $buttonHT->render();
 ```

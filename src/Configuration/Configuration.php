@@ -475,7 +475,7 @@ class Configuration extends ArrayObject implements Stringable
             'phoneValidation'  => PhoneValidation::class,
             'orderIdGenerator' => OrderIdGenerator::class,
         ])]
-        array $config
+        array|Configuration $config
     ): Configuration {
 
 //        $hostConfig = self::getHostConfiguration();

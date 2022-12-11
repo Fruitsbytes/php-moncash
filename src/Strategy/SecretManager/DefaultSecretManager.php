@@ -40,7 +40,7 @@ class DefaultSecretManager implements SecretManagerInterface
             $dotenv = Dotenv::createImmutable($path);
             $dotenv->load();
         } catch (Exception $e) {
-            throw new SecretManagerException("Could not load .env file from path [$path]", 0, $e);
+//            throw new SecretManagerException("Could not load .env file from path [$path]", 0, $e);
         }
 
         return false;

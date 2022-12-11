@@ -3,7 +3,11 @@
 
 namespace Fruitsbytes\PHP\MonCash\Button;
 
+use Fruitsbytes\PHP\MonCash\API\APIException;
+use Fruitsbytes\PHP\MonCash\API\Client;
+use Fruitsbytes\PHP\MonCash\API\ClientException;
 use Fruitsbytes\PHP\MonCash\API\Order;
+use Fruitsbytes\PHP\MonCash\API\PaymentException;
 use Fruitsbytes\PHP\MonCash\Configuration\Configuration;
 use Fruitsbytes\PHP\MonCash\Configuration\ConfigurationException;
 use Fruitsbytes\PHP\MonCash\Strategy\OrderIdGenerator\OrderIdGeneratorException;
@@ -45,6 +49,7 @@ class ButtonStyleRedResponsive implements ButtonInterface
         if (empty($this->order->id)) {
             $this->order->id = $this->configuration->orderIdGenerator->getNewID();
         }
+
     }
 
     public function html(): string
@@ -123,6 +128,19 @@ class ButtonStyleRedResponsive implements ButtonInterface
     public function __toString()
     {
         return $this->html();
+    }
+
+    /**
+     * Get Url for redirection
+     * @throws PaymentException
+     * @throws ConfigurationException
+     * @throws ClientException
+     * @throws APIException
+     */
+    public function getUrl(){
+         $client =  new Client( $this->configuration);
+
+        return  $client->getRedirectUrlForOrder($this->order);
     }
 }
 

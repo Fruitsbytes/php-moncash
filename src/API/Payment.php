@@ -54,17 +54,7 @@ class Payment
      * Parse the response from the CreatePayment into a Payment
      *
      * @param  Order  $order
-     * @param  array{
-     *                  mode: string,
-     *                  path: string,
-     *                  payment_token: array{
-     *                                          expired: string,
-     *                                          created: string,
-     *                                          token: string
-     *                                      },
-     *                  timestamp: int,
-     *                  status: int
-     *              }  $array
+     * @param  array{ mode: string, path: string, payment_token: array{expired: string,created: string,token: string},timestamp: int,status: int}  $array
      *
      * @return Payment
      * @throws PaymentException

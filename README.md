@@ -89,36 +89,32 @@ For a complete guide please check the [Wiki](https://github.com/Fruitsbytes/php-
 composer require fruitsbytes/php-moncash
 ```
 
-### Environment variables & configuration
-You can setup a .env file in the root of your project to automatically configure the client:
+### Configuration
 
-```shell
-# .env 
-
-MONCASH_CLIENT_ID="<!your-client-id/>"
-MONCASH_CLIENT_SECRET="<!your-client-secret/>"
-MONCASH_BUSINESS_KEY="<!--------/>"
-MONCASH_MODE="sandbox"
-MONCASH_LANG="env"
-MONCASH_RSA_KEY_PATH="/secure-path-to-rsa-dir/rsa.txt"
-```
 
 ```php
 // index.php
 
 use Fruitsbytes\PHP\MonCash\API\Client;
 
-$client = new Client();
+$client = new Client(
+                        [
+                            'clientSecret'     => 'my-client-secret',
+                            'clientId'         => 'my-client-key',
+                            'businessKey'      => 'my-merchant-key',
+                        ]
+                    );
 
 ```
 
-You override the Environment variables or completely ignore them:
+You can update or set the configuration:
 
 ```php
 
 use Fruitsbytes\PHP\MonCash\Configuration\Configuration;
 
 $configuration = new Configuration(["lang"=>"ht"]);
+$client = new Client($configuration);
 
 ```
 

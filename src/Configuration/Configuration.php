@@ -478,22 +478,21 @@ class Configuration extends ArrayObject implements Stringable
         array $config
     ): Configuration {
 
-        $hostConfig = self::getHostConfiguration();
+//        $hostConfig = self::getHostConfiguration();
 
-        $this->mode = $config['mode'] ?? $this->mode ?? $hostConfig['mode'] ?? 'sandbox';
+        $this->mode = $config['mode'] ?? $this->mode ?? 'sandbox';
         if (in_array($this->mode, ['production', 'live', 'sandbox']) === false) {
             throw new ConfigurationException('INVALID_MODE');
         }
         $this->mode = $this->mode === 'sandbox' ? $this->mode : 'production';
 
 
-        $this->clientId        = $config['clientId'] ?? $this->clientId ?? $hostConfig['clientId'];
-        $this->lang            = $config['lang'] ?? $this->lang ?? $hostConfig['lang'];
+        $this->clientId        = $config['clientId'] ?? $this->clientId ?? "";
+        $this->lang            = $config['lang'] ?? $this->lang ?? "";
         $this->businessKey     = $config['businessKey'] ??
-                                 $this->businessKey ??
-                                 $hostConfig['businessKey'];
+                                 $this->businessKey ?? "";
         $this->timeout         = $config['timeout'] ?? $this->timeout ?? 60;
-        $this->rsaPath         = $config['rsaPath'] ?? $this->rsaPath ?? $hostConfig['rsaPath'];
+        $this->rsaPath         = $config['rsaPath'] ?? $this->rsaPath ?? "";
         $this->gatewayBase     = self::GATEWAY_BASE[$this->mode];
         $this->gatewayMerchant = self::GATEWAY_MERCHANT[$this->mode];
         $this->restApi         = self::HOST_REST_API[$this->mode];
